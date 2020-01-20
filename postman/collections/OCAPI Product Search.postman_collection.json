@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "0ef7147d-854c-4b60-af5f-8d035d0f8aa5",
+		"name": "OCAPI Product Search",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Product Search",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-dw-client-id",
+						"value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{shop_url}}/product_search?q=shirt&refine_1=cgid=womens&refine_3=price=(0..500)&sort=top-sellers&count",
+					"host": [
+						"{{shop_url}}"
+					],
+					"path": [
+						"product_search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "shirt"
+						},
+						{
+							"key": "refine_1",
+							"value": "cgid=womens"
+						},
+						{
+							"key": "refine_3",
+							"value": "price=(0..500)"
+						},
+						{
+							"key": "sort",
+							"value": "top-sellers"
+						},
+						{
+							"key": "count",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

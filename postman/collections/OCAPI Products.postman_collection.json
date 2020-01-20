@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "ebe864e4-cc02-4ce9-b7d4-8163298034f6",
+		"name": "OCAPI Products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-dw-client-id",
+						"value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{shop_url}}/products/{{product_id}}",
+					"host": [
+						"{{shop_url}}"
+					],
+					"path": [
+						"products",
+						"{{product_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product Images",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-dw-client-id",
+						"type": "text",
+						"value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+					}
+				],
+				"url": {
+					"raw": "{{shop_url}}/products/{{product_id}}/images",
+					"host": [
+						"{{shop_url}}"
+					],
+					"path": [
+						"products",
+						"{{product_id}}",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product Prices",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-dw-client-id",
+						"type": "text",
+						"value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+					}
+				],
+				"url": {
+					"raw": "{{shop_url}}/products/{{product_id}}/prices",
+					"host": [
+						"{{shop_url}}"
+					],
+					"path": [
+						"products",
+						"{{product_id}}",
+						"prices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product Availability",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-dw-client-id",
+						"type": "text",
+						"value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+					}
+				],
+				"url": {
+					"raw": "{{shop_url}}/products/{{product_id}}/availability",
+					"host": [
+						"{{shop_url}}"
+					],
+					"path": [
+						"products",
+						"{{product_id}}",
+						"availability"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product Prices Options",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-dw-client-id",
+						"type": "text",
+						"value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+					}
+				],
+				"url": {
+					"raw": "{{shop_url}}/products/{{product_id}}/options",
+					"host": [
+						"{{shop_url}}"
+					],
+					"path": [
+						"products",
+						"{{product_id}}",
+						"options"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "de7dd202-598a-4625-b514-30ead60d8105",
+		"name": "OCAPI Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Guest Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3e5829f1-bb05-4d39-bfef-c3a01f51154a",
+						"exec": [
+							"// Tests",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"pm.test(\"Response Format: JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"});",
+							"",
+							"var customerData = JSON.parse(responseBody);",
+							"if(customerData !==null && customerData.auth_type !==null && customerData.auth_type==='guest'){",
+							"    if(pm.response.to.have.header('Authorization')){",
+							"        postman.setEnvironmentVariable(\"auth_token\", pm.response.headers.get('Authorization').split(' ')[1]);    ",
+							"    }",
+							"    ",
+							"} else {",
+							" tests[\"accessToken property missing\"] = false",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-dw-client-id",
+						"value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"type\" : \"guest\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{shop_url}}/customers/auth",
+					"host": [
+						"{{shop_url}}"
+					],
+					"path": [
+						"customers",
+						"auth"
+					]
+				},
+				"description": "Authorization like guest"
+			},
+			"response": []
+		},
+		{
+			"name": "User Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f15cf144-abbe-49ad-9227-5667825985b9",
+						"exec": [
+							"// Tests",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"pm.test(\"Response Format: JSON\", function () {",
+							"    var jsonData = pm.response.json();",
+							"});",
+							"",
+							"var customerData = JSON.parse(responseBody);",
+							"if(customerData !==null && customerData.auth_type !==null && customerData.auth_type==='registered' && customerData.customer_id!==null){",
+							"    if(pm.response.to.have.header('Authorization')){",
+							"        postman.setEnvironmentVariable(\"auth_token\", pm.response.headers.get('Authorization').split(' ')[1]);    ",
+							"    }",
+							"    ",
+							"} else {",
+							" tests[\"accessToken property missing\"] = false",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Qweewq123-",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{customer_username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-dw-client-id",
+						"value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"type\" : \"credentials\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{shop_url}}/customers/auth",
+					"host": [
+						"{{shop_url}}"
+					],
+					"path": [
+						"customers",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
