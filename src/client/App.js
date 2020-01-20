@@ -1,9 +1,15 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ProductTile from "./components/ProductTile/ProductTile";
 import './App.css';
 
 function App() {
   return (
-    <div className="App"></div>
+    <Router>
+      <Switch>
+        <Route path="/product-tile" component={ProductTile} />
+      </Switch>
+    </Router>
   );
 }
 
