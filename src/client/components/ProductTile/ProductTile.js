@@ -1,15 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ProductImage from "../../images/PG.10219989.JJBF5XX.PZ.jpg";
-import { auth_token } from '../../services/http';
+import { getProduct } from '../../services/http';
 
 const ProductTile = () => {
-  console.log(auth_token);
+  const params = {
+    expand: "variations, images",
+  }
+  const product = getProduct("25697194M", params);
+  console.log(product.then(res => res.id));
 
   return (
     <div className="product-tile">
-      <div className="product-tile__image-container">
-        <Link>
+      <div className="image-container">
+        <Link to="/product-tile">
           <img src={ProductImage} alt="product"/>
         </Link>
       </div>

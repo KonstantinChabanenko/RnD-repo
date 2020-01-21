@@ -1,20 +1,39 @@
 import api from '../config/api';
+import axios from 'axios';
 
-const handleError = res => {
-    if (!res.ok) {
-        throw Error(res.statusText);
-    }
-    return res.json();
+const { root } = api;
+
+export const get_auth_token = async () => {
+    const auth_token = await axios.post(
+        `${root}/customers/auth`,
+        {
+            type: "guest",
+        },
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            }
+        }
+    );
+
+    return auth_token.headers.authorization;
 }
 
-export const auth_token = fetch(`${api.root}/customers/auth`, {
-        method: 'POST',
-        headers: {
-            'x-dw-client-id': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-            'Content-Type': 'application/json',
-        },
-        body: {
-            'type': 'guest',
+const get = async (path, params) => {
+    const auth_token = get_auth_token();
+    const data = await axios.get(
+        `${root}/${path}`,
+        {
+            headers: {
+                Authorization: auth_token,
+                "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            },
+            params,
         }
-    }
-).then(res => res.json());
+    );
+
+    return data.data;
+}
+
+export const getProduct = (id, params) => get(`products/${id}`, params);
