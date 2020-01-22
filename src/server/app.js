@@ -2,7 +2,6 @@ const fastify = require('fastify')({ logger: true })
 
 const port = require('./config').port;
 
-
 fastify.register(require('fastify-cors'), { 
   origin: ["http://localhost:3000", "http://192.168.0.165:3000"],
   methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
