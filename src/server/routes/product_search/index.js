@@ -11,10 +11,10 @@ module.exports = (fastify, opts, done) => {
     queryString = queryString.slice(0, queryString.length-1);
     console.log(`query string ${queryString}`);
     }
-    
+    console.log((queryString ? '?' + queryString : ""));
     let options =  {
       method: "GET",
-      url: config.url + '/product_search' + '?' + queryString,
+      url: config.url + '/product_search' + (queryString ? '?' + queryString : ""),
       json: true,
       headers: {
         "Content-Type": "application/json",

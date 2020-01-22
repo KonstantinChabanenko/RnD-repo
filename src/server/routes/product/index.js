@@ -1,13 +1,19 @@
-const token = require('../../config/auth');
 const config = require('../../config');
 const req = require("request");
 
 module.exports = (fastify, opts, done) => {
   fastify.get('/products/:params', (request, reply) => {
-    console.log(request.params.params)
+    let queryString = '';
+    if (Object.entries(request.query).length !== 0) {
+    for (let [key, value] of Object.entries(request.query)) {
+     queryString += key + '=' + value + '&';
+    }
+    queryString = queryString.slice(0, queryString.length-1);
+    console.log(queryString);
+  }
     let options =  {
       method: "GET",
-      url: config.url + '/products/' + request.params.params,
+      url: config.url + '/products/' + request.params.params + (queryString ? '?' + queryString : ""),
       json: true,
       headers: {
         "Content-Type": "application/json",

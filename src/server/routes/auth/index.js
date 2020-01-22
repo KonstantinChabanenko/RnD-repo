@@ -1,4 +1,3 @@
-const http = require('../../services/http');
 const token = require('../../config/auth');
 const config = require('../../config');
 const req = require("request");
