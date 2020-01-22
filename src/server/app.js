@@ -1,15 +1,20 @@
-const http = require('http');
+const fastify = require('fastify')({ logger: true })
 
-const hostname = '127.0.0.1';
-const port = 8000;
-
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
-});
+const port = require('./config').port;
 
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}`);
-});
+
+fastify.register(require('./routes/auth'), { prefix: '/' });
+fastify.register(require('./routes/product'), { prefix: '/' });
+fastify.register(require('./routes/product_search'), { prefix: '/' });
+
+const start = async () => {
+  try {
+    await fastify.listen(port)
+    fastify.log.info(`server listening on ${fastify.server.address().port}`)
+  } catch (err) {
+    fastify.log.error(err)
+    process.exit(1)
+  }
+}
+start()

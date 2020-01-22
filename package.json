@@ -6,14 +6,23 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.1",
+    "fastify": "^2.11.0",
+    "nodemon": "^2.0.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "request": "^2.88.0"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src/server/"
+    ]
   },
   "scripts": {
     "client": "react-scripts start",
-    "server": "node ./src/server/app.js",
+    "server": "nodemon --exec babel-node ./src/server/app.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -35,6 +44,15 @@
     ]
   },
   "devDependencies": {
-    "concurrently": "^5.0.2"
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "7.2.2",
+    "@babel/node": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "7.2.3",
+    "@babel/plugin-transform-runtime": "7.2.0",
+    "@babel/preset-env": "7.2.3",
+    "@babel/preset-react": "7.0.0",
+    "concurrently": "^5.0.2",
+    "css-loader": "^3.4.2",
+    "node-hot-loader": "^1.17.8"
   }
 }
