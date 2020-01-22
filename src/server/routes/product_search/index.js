@@ -3,8 +3,8 @@ const req = require("request");
 
 module.exports = (fastify, opts, done) => {
   fastify.get('/product_search', (request, reply) => {
+    let queryString = '';
     if (Object.entries(request.query).length !== 0) {
-      let queryString = '';
     for (let [key, value] of Object.entries(request.query)) {
      queryString += key + '=' + value + '&';
     }
@@ -14,7 +14,7 @@ module.exports = (fastify, opts, done) => {
     
     let options =  {
       method: "GET",
-      url: config.url + '/product_search' ,
+      url: config.url + '/product_search' + '?' + queryString,
       json: true,
       headers: {
         "Content-Type": "application/json",
