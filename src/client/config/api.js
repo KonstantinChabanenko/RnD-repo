@@ -1,5 +1,5 @@
 const api = {
-    root: 'https://epamsystems06-alliance-prtnr-eu02-dw.demandware.net/s/RefArch/dw/shop/v20_2',
+    root: 'http://127.0.0.1:8000',
 }
 
 export default api;

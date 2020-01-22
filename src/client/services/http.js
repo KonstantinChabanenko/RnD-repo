@@ -3,22 +3,12 @@ import axios from 'axios';
 
 const { root } = api;
 
-export const get_auth_token = async () => {
-    const auth_token = await axios.post(
-        `${root}/customers/auth`,
-        {
-            type: "guest",
-        },
-        {
-            headers: {
-                "Content-Type": "application/json",
-                "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            }
-        }
-    );
-
-    return auth_token.headers.authorization;
-}
+export const get_auth_token = axios.post(
+    `${root}/customers/auth`,
+    {
+        type: "guest",
+    },
+)
 
 const get = async (path, params) => {
     const auth_token = get_auth_token();

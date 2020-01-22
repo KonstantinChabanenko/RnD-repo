@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ProductImage from "../../images/PG.10219989.JJBF5XX.PZ.jpg";
-import { getProduct } from '../../services/http';
+import { get_auth_token } from '../../services/http';
 
 const ProductTile = () => {
   const params = {
     expand: "variations, images",
   }
-  const product = getProduct("25697194M", params);
-  console.log(product.then(res => res.id));
+
+  console.log(get_auth_token);
 
   return (
     <div className="product-tile">
