@@ -3,7 +3,10 @@ const fastify = require('fastify')({ logger: true })
 const port = require('./config').port;
 
 
-
+fastify.register(require('fastify-cors'), { 
+  origin: ["http://localhost:3000", "http://192.168.0.165:3000"],
+  methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
+})
 fastify.register(require('./routes/auth'), { prefix: '/' });
 fastify.register(require('./routes/product'), { prefix: '/' });
 fastify.register(require('./routes/product_search'), { prefix: '/' });
