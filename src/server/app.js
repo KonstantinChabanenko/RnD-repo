@@ -1,4 +1,6 @@
-const fastify = require('fastify')({ logger: true })
+const fastify = require('fastify')({ logger: true,
+maxParamLength: 1000
+})
 
 const port = require('./config').port;
 

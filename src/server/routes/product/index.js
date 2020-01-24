@@ -9,8 +9,9 @@ module.exports = (fastify, opts, done) => {
      queryString += key + '=' + value + '&';
     }
     queryString = queryString.slice(0, queryString.length-1);
-    console.log(queryString);
+    console.log('QUERYSTRING: ' + queryString);
   }
+  console.log('PARAMS: '+ request.params.params);
     let options =  {
       method: "GET",
       url: config.url + '/products/' + request.params.params + (queryString ? '?' + queryString : ""),
