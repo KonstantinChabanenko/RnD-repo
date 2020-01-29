@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ProductTile from "./components/ProductTile/ProductTile";
+import ProductTile from "./components/ProductTile";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

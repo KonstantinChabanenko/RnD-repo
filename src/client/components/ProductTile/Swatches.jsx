@@ -1,25 +1,20 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useMemo } from 'react';
+import { getProductSwatches } from '../../helpers/product/productTileHelper';
 
-const Swatches = ({ variationProducts, variationAttributes }) => {
-  const getUniqueColors = (array) => {
-    let uniqueColors = [];
-    let images = [];
-
-    for (let variant of array) {
-      if (uniqueColors.indexOf(variant.c_color) === -1) {
-        uniqueColors.push(variant.c_color);
-        images.push(variant.image_groups[3].images[0]);
-      }
-    }
-
-    return images;
-  }
+const Swatches = ({ variants }) => {
+  const memoizedSwatches = useMemo(() => getProductSwatches(variants), [variants]);
 
   return (
     <Fragment>
       <div className="product-tile__color-swatches">
         {
-          getUniqueColors(variationProducts).map(image => <img src={image.link} alt={image.alt} />)
+          memoizedSwatches.map(image => <img
+            key={image.title}
+            src={image.link}
+            alt={image.alt}
+            className="swatch"
+            style={{ backgroundImage: `url(${image.link})` }}
+          />)
         }
       </div>
     </Fragment>
