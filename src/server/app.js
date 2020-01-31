@@ -12,6 +12,7 @@ fastify.register(require('fastify-cors'), {
 fastify.register(require('./routes/auth'), { prefix: '/' });
 fastify.register(require('./routes/product'), { prefix: '/' });
 fastify.register(require('./routes/product_search'), { prefix: '/' });
+fastify.register(require('./routes/product_tile'), { prefix: '/' });
 
 const start = async () => {
   try {
