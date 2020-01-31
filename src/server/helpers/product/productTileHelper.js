@@ -1,7 +1,6 @@
 const config = require('../../config');
 const axios = require('axios');
 const token = require('../../config/auth');
-const currencies = require('../../static/currencies');
 
 const options = (url, queryString) =>  {
       return {
