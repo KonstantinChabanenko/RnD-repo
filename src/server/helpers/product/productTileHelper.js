@@ -1,70 +1,77 @@
-const config = require('../../config');
-const axios = require('axios');
-const token = require('../../config/auth');
+const config = require("../../config");
+const axios = require("axios");
+const token = require("../../config/auth");
 
-const options = (url, queryString) =>  {
-      return {
-      method: 'GET',
-      url: config.url + url + (queryString ? '?' + queryString : ""),
-      json: true,
-      headers: {
-        "Content-Type": "application/json",
-        "x-dw-client-id": config.client_id,
-        "Authorization": "Bearer " + token.get()
-      },
-    };
-}
-export const getProductDetails = async (productId, params) => {
-  const productData = await axios(options(`/products/${productId}`, params));
-  const product = productData.data;
-  const variants = await axios(options(`/products/(${product.variants.map(variant =>variant.product_id).join(",")})`), 'expand=prices,images');
-  const productDetails = {
-      title: product.page_title,
-      imageSrc: product.image_groups[1].images[0].link,
-      imageAlt: product.image_groups[1].images[0].alt,
-      priceMax: product.price_max,
-      priceMin: product.price,
-      currencySymbol: currencies[product.currency],
-      variationAttributes: product.variation_attributes,
-      variants: variants.data,
-  }
-  return productDetails;
-}
+const options = (url, queryString) => {
+  return {
+    method: "GET",
+    url: config.url + url + (queryString ? "?" + queryString : ""),
+    json: true,
+    headers: {
+      "Content-Type": "application/json",
+      "x-dw-client-id": config.client_id,
+      Authorization: "Bearer " + token.get()
+    }
+  };
+};
 
 export const getProductVariations = async (variationsIds, params) => {
-const variants = await axios(options(`/products/(${variationsIds.map(variant => variant.product_id).join(",")})`, params));
-return variants.data;
-}
+  const variants = await axios(
+    options(
+      `/products/(${variationsIds
+        .map(variant => variant.product_id)
+        .join(",")})`,
+      params
+    )
+  );
+  return variants.data;
+};
 
-export const getReadyProducts = async (products) => {
-  const temp = products.map(async (product) => {
-    const variants = await getProductVariations(product.variants, 'expand=prices,images')
-      let tempProduct = {
-        title: product.page_title,
-        imageSrc: product.image_groups[1].images[0].link,
-        imageAlt: product.image_groups[1].images[0].alt,
-        priceMax: product.price_max,
-        priceMin: product.price,
-        currency: product.currency,
-        variants: variants.data
-      };
-      return tempProduct;
-})
+export const getReadyProducts = async products => {
+  const temp = products.map(async product => {
+    console.log(product);
+    let tempProduct = {
+      id: product.id,
+      imageSrc: product.image_groups[1].images[0].link,
+      imageAlt: product.image_groups[1].images[0].alt,
+      product_type: Object.keys(product.type)[1],
+      priceMin: product.price,
+      currency: product.currency
+    };
 
-return Promise.all(temp);
-}
+    if (product.type.master) {
+      const variants = await getProductVariations(
+        product.variants,
+        "expand=prices,images"
+      );
+      tempProduct.variants = variants.data;
+      tempProduct.priceMax = product.price_max;
+      tempProduct.title = product.page_title;
+    } else {
+      tempProduct.title = product.name;
+    }
 
-export const getProductListPrice = (variants) => {
-  const variantsPrices = variants.map(variant => variant.prices ? variant.prices : {});
+    return tempProduct;
+  });
+
+  return Promise.all(temp);
+};
+
+export const getProductListPrice = variants => {
+  const variantsPrices = variants.map(variant =>
+    variant.prices ? variant.prices : {}
+  );
   const listPrices = variantsPrices.map(pricesObj => {
     const prices = Object.values(pricesObj);
     return prices.length > 0 ? Math.max(...prices) : null;
   });
 
-  return listPrices.length > 0 ? Math.min(...listPrices).toString() + '.00' : null;
-}
+  return listPrices.length > 0
+    ? Math.min(...listPrices).toString() + ".00"
+    : null;
+};
 
-export const getProductSwatches = (variants) => {
+export const getProductSwatches = variants => {
   let uniqueColors = [];
   let images = [];
 
@@ -76,4 +83,4 @@ export const getProductSwatches = (variants) => {
   }
 
   return images;
-}
+};

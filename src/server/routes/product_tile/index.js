@@ -8,7 +8,7 @@ const {
 } = require("../../helpers/product/productTileHelper");
 
 module.exports = (fastify, opts, done) => {
-  fastify.get("/producttile/:category", async (request, reply) => {
+  fastify.get("/producttiles/:category", async (request, reply) => {
     const options = (url, queryString, method, body) => {
       return {
         method: method,
@@ -44,9 +44,11 @@ module.exports = (fastify, opts, done) => {
     const detailedProducts = await getReadyProducts(products);
 
     const readyProducts = detailedProducts.map(product => {
-      let tempProduct = {...product};
-      tempProduct.listPrices = getProductListPrice(tempProduct.variants);
-      tempProduct.images = getProductSwatches(tempProduct.variants);
+      let tempProduct = { ...product };
+      if (product.product_type === "master") {
+        tempProduct.listPrices = getProductListPrice(tempProduct.variants);
+        tempProduct.images = getProductSwatches(tempProduct.variants);
+      }
       return tempProduct;
     });
 
