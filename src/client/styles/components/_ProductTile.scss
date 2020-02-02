@@ -1,0 +1,35 @@
+.product-tile {
+    &__pdp-link {
+        text-decoration: none;
+        font-size: rem-calc(16);
+        line-height: rem-calc(19);
+    }
+    &__price {
+        font-size: rem-calc(18);
+        line-height: rem-calc(27);
+        .list-price {
+            margin-right: rem-calc(16);
+            color: $gray-600;
+            text-decoration: line-through;
+        }
+
+        .sale-price {
+            font-weight: 700;
+        }
+    }
+    &__color-swatches {
+        .swatch {
+            width: rem-calc(28);
+            height: rem-calc(28);
+            margin-right: rem-calc(5);
+            border: rem-calc(1) solid rgba(0,0,0,.3);
+            border-radius: 50%;
+        }
+    }
+    &__body {
+        padding: rem-calc(10 0 30);
+    }
+    &__image {
+        width: 100%;
+    }
+}

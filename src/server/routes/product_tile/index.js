@@ -44,10 +44,19 @@ module.exports = (fastify, opts, done) => {
     const detailedProducts = await getReadyProducts(products);
 
     const readyProducts = detailedProducts.map(product => {
-      let tempProduct = { ...product };
+      let tempProduct = {
+        id: product.id,
+        imageSrc: product.imageSrc,
+        imageAlt: product.imageAlt,
+        product_type: product.product_type,
+        priceMin: product.priceMin,
+        currency: product.currency,
+        priceMax: product.priceMax,
+        title: product.title
+      };
       if (product.product_type === "master") {
-        tempProduct.listPrices = getProductListPrice(tempProduct.variants);
-        tempProduct.images = getProductSwatches(tempProduct.variants);
+        tempProduct.listPrice = getProductListPrice(product.variants);
+        tempProduct.swatches = getProductSwatches(product.variants);
       }
       return tempProduct;
     });
