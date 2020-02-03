@@ -14,6 +14,31 @@ const options = (url, queryString) => {
     }
   };
 };
+export const getProductDetails = async product => {
+  let tempProduct = {
+    id: product.id,
+    images: product.image_groups[0].images,
+    product_type: Object.keys(product.type)[1],
+    priceMin: product.price,
+    currency: product.currency,
+    long_description: product.long_description,
+    short_description: product.short_description,
+    product_promotions: product.product_promotions
+  };
+
+  if (product.type.master) {
+    const variants = await getProductVariations(
+      product.variants,
+      "expand=prices,images,availability"
+    );
+    tempProduct.variants = variants.data;
+    tempProduct.priceMax = product.price_max;
+    tempProduct.title = product.page_title;
+  } else {
+    tempProduct.title = product.name;
+  }
+  return tempProduct;
+};
 
 export const getProductVariations = async (variationsIds, params) => {
   const variants = await axios(
@@ -29,7 +54,6 @@ export const getProductVariations = async (variationsIds, params) => {
 
 export const getReadyProducts = async products => {
   const temp = products.map(async product => {
-    console.log(product);
     let tempProduct = {
       id: product.id,
       imageSrc: product.image_groups[1].images[0].link,
