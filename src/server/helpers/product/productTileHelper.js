@@ -73,14 +73,17 @@ export const getProductListPrice = variants => {
 
 export const getProductSwatches = variants => {
   let uniqueColors = [];
-  let images = [];
+  let swatches = [];
 
   for (let variant of variants) {
     if (uniqueColors.indexOf(variant.c_color) === -1) {
       uniqueColors.push(variant.c_color);
-      images.push(variant.image_groups[3].images[0]);
+      swatches.push({
+        image: variant.image_groups[3].images[0],
+        color_value: variant.c_color
+      });
     }
   }
 
-  return images;
+  return swatches;
 };

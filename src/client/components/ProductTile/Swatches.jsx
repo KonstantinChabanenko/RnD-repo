@@ -9,14 +9,14 @@ const Swatches = ({ swatches, product_id }) => {
         {
           swatches.map(swatch => (
             <img
-              key={swatch.title}
-              src={swatch.link}
-              alt={swatch.alt}
+              key={swatch.image.title}
+              src={swatch.image.link}
+              alt={swatch.image.alt}
               className="swatch"
-              style={{ backgroundImage: `url(${swatch.link})` }}
+              style={{ backgroundImage: `url(${swatch.image.link})` }}
               onClick={() => history.push({
                 pathname: `/product-details/${product_id}`,
-                query: { color: 'red' } // will be changed
+                query: { color: swatch.color_value }
               })}
             />
           ))
