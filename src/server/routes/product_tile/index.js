@@ -5,7 +5,7 @@ const {
   getReadyProducts,
   getProductListPrice,
   getProductSwatches
-} = require("../../helpers/product/productTileHelper");
+} = require("../../helpers/product/productHelper");
 
 module.exports = (fastify, opts, done) => {
   fastify.get("/producttiles/:category", async (request, reply) => {
