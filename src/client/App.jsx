@@ -9,9 +9,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" render={() => <h1>Home page</h1>} />
-          <Route path="/:cat_lv1/:cat_lv2/:cat_lv3" component={ProductListingPage} />
-          <Route path="/:cat_lv1" />
-          <Route path="/:cat_lv1/:cat_lv2" />
+          <Route path="/categories/:categoryId" component={ProductListingPage} />
         </Switch>
       </Router>
     </div>
