@@ -28,6 +28,9 @@ const ProductListingPage = () => {
           case 'sizes':
             params[`refine_${index}`] = `c_size=${selectedRefinements[key].join('|')}`;
             break;
+          case 'price':
+            params[`refine_${index}`] = `price=${selectedRefinements[key]}`;
+            break;
           default:
             return null;
         }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 
 const NewArrival = ({ filter, selectedRefinements, setSelectedRefinements }) => (
-    <Card className="refinement colors">
+    <Card className="refinement new-arrival">
         <Card.Header>{filter.label}</Card.Header>
         <Card.Body>
             <ul className="refinement__values top-level">
