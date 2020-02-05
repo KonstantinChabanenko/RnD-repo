@@ -25,12 +25,14 @@ const ProductListingPage = () => {
               params[`refine_${index}`] = `c_isNew`;
             }
             break;
+          case 'sizes':
+            params[`refine_${index}`] = `c_size=${selectedRefinements[key].join('|')}`;
+            break;
           default:
             return null;
         }
       }
     });
-    console.log(params);
 
     setProducts(prevState => ({ ...prevState, loaded: false }));
     setFilters(prevState => ({ ...prevState, loaded: false }));
