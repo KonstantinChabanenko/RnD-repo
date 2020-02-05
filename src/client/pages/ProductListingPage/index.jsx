@@ -10,7 +10,7 @@ const ProductListingPage = () => {
   const { categoryId } = useParams();
   const [products, setProducts] = useState({ items: null, loaded: false });
   const [filters, setFilters] = useState({ items: null, loaded: false });
-  const [selectedRefinements, setSelectedRefinements] = useState({ categoryId });
+  const [selectedRefinements, setSelectedRefinements] = useState({ categoryId, isNew: false });
 
   useEffect(() => {
     const params = {};
@@ -19,6 +19,12 @@ const ProductListingPage = () => {
         switch (key) {
           case 'colors':
             params[`refine_${index}`] = `c_refinementColor=${selectedRefinements[key].join('|')}`;
+            break;
+          case 'isNew':
+            if (selectedRefinements.isNew) {
+              params[`refine_${index}`] = `c_isNew`;
+            }
+            break;
           default:
             return null;
         }

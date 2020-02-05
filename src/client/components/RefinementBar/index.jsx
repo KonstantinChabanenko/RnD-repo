@@ -1,6 +1,7 @@
 import React from 'react';
 import Categories from './Categories';
 import Colors from './Colors';
+import NewArrival from './NewArrival';
 
 const RefinementBar = ({ filters, ...props }) => (
   <div className="refinements">
@@ -9,7 +10,9 @@ const RefinementBar = ({ filters, ...props }) => (
         case "cgid":
           return <Categories key={filter.attribute_id} categories={filter} {...props} />;
         case "c_refinementColor":
-          return <Colors key={filter.attribute_id} colors={ filter } {...props} />;
+          return <Colors key={filter.attribute_id} colors={filter} {...props} />;
+        case "c_isNew":
+          return <NewArrival key={filter.attribute_id} filter={filter} {...props} />
         default:
           return null;
       }
