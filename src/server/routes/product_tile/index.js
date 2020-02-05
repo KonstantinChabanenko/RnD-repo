@@ -40,7 +40,10 @@ module.exports = (fastify, opts, done) => {
     const masterProductIds = productSearchHits
       .map(hit => hit.product_id)
       .toString();
-    await axios.post("http://127.0.0.1:8000/customers/auth", { type: "guest" });
+        if(!token.get()){
+          await axios.post("http://127.0.0.1:8000/customers/auth", { type: "guest" });
+        }
+
     const products_result = await axios(
       options(
         `/products/(${masterProductIds})`,
@@ -64,6 +67,7 @@ module.exports = (fastify, opts, done) => {
         title: product.title
       };
       if (product.product_type === "master") {
+        console.log(product.variants);
         tempProduct.listPrice = getProductListPrice(product.variants);
         tempProduct.swatches = getProductSwatches(product.variants);
       }

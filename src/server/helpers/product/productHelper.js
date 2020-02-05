@@ -64,11 +64,33 @@ export const getReadyProducts = async products => {
     };
 
     if (product.type.master) {
-      const variants = await getProductVariations(
-        product.variants,
-        "expand=prices,images"
-      );
-      tempProduct.variants = variants.data;
+      let variants = [];
+      if (product.variants.length > 24) {
+        let requestAmount =
+          product.variants.length % 24 === 0
+            ? product.variants.length / 24
+            : Math.floor(product.variants.length / 24) + 1;
+        let tempVariants = {};
+        for (let i = 0; i < requestAmount; i++) {
+          tempVariants = await getProductVariations(
+            product.variants.slice(
+              i * 24,
+              i * 24 > product.variants.length
+                ? product.variants.length - 1
+                : (i + 1) * 24
+            ),
+            "expand=prices,images"
+          );
+          variants = variants.concat(tempVariants.data);
+          tempProduct.variants = variants;
+        }
+      } else {
+        variants = await getProductVariations(
+          product.variants,
+          "expand=prices,images"
+        );
+        tempProduct.variants = variants.data;
+      }
       tempProduct.priceMax = product.price_max;
       tempProduct.title = product.page_title;
     } else {
