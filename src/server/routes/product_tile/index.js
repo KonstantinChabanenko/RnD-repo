@@ -37,6 +37,7 @@ module.exports = (fastify, opts, done) => {
     );
     const productSearchHits = productSearch_result.data.hits;
     const refinements = productSearch_result.data.refinements;
+    const sortingOptions = productSearch_result.data.sorting_options;
     const masterProductIds = productSearchHits
       .map(hit => hit.product_id)
       .toString();
@@ -67,14 +68,13 @@ module.exports = (fastify, opts, done) => {
         title: product.title
       };
       if (product.product_type === "master") {
-        console.log(product.variants);
         tempProduct.listPrice = getProductListPrice(product.variants);
         tempProduct.swatches = getProductSwatches(product.variants);
       }
       return tempProduct;
     });
 
-    reply.code(200).send({ products: readyProducts, refinements });
+    reply.code(200).send({ products: readyProducts, refinements, sortingOptions });
   });
   done();
 };
