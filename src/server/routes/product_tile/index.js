@@ -9,10 +9,18 @@ const {
 
 module.exports = (fastify, opts, done) => {
   fastify.get("/producttiles/:category", async (request, reply) => {
-    const options = (url, queryString, method, body) => {
+    let queryString = '';
+    if (Object.entries(request.query).length !== 0) {
+    for (let [key, value] of Object.entries(request.query)) {
+     queryString += key + '=' + value + '&';
+    }
+    queryString = queryString.slice(0, queryString.length-1);
+    }
+    console.log('querystring-----------------',(queryString ? '?' + queryString : ""));
+    const options = (url, query, method, body) => {
       return {
         method: method,
-        url: config.url + url + (queryString ? "?" + queryString : ""),
+        url: config.url + url + (query ? "?" + query : ""),
         json: true,
         headers: {
           "Content-Type": "application/json",
@@ -24,14 +32,19 @@ module.exports = (fastify, opts, done) => {
     const productSearch_result = await axios(
       options(
         "/product_search",
-        "count=24&refine=cgid=" + request.params.category
+        "count=24&refine=cgid=" + request.params.category + `&${queryString}`
       )
     );
     const productSearchHits = productSearch_result.data.hits;
+    const refinements = productSearch_result.data.refinements;
+    const sortingOptions = productSearch_result.data.sorting_options;
     const masterProductIds = productSearchHits
       .map(hit => hit.product_id)
       .toString();
-    await axios.post("http://127.0.0.1:8000/customers/auth", { type: "guest" });
+        if(!token.get()){
+          await axios.post("http://127.0.0.1:8000/customers/auth", { type: "guest" });
+        }
+
     const products_result = await axios(
       options(
         `/products/(${masterProductIds})`,
@@ -61,7 +74,7 @@ module.exports = (fastify, opts, done) => {
       return tempProduct;
     });
 
-    reply.code(200).send(readyProducts);
+    reply.code(200).send({ products: readyProducts, refinements, sortingOptions });
   });
   done();
 };
