@@ -9,13 +9,13 @@ const ProductTile = ({ product }) => {
   return (
     <div className="product-tile">
       <div className="image-container">
-        <Link to="/product-tile">
+        <Link to={`/product/details/${id}`}>
           <img className="product-tile__image" src={imageSrc} alt={imageAlt} />
         </Link>
       </div>
       <div className="product-tile__body">
         {swatches ? <Swatches swatches={swatches} product_id={id} /> : null}
-        <Link to="/product-details" className="product-tile__pdp-link">{title}</Link>
+        <Link to={`/product/details/${id}`} className="product-tile__pdp-link">{title}</Link>
         <Prices
           priceMax={priceMax}
           priceMin={priceMin}

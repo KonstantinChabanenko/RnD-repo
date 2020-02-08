@@ -15,7 +15,7 @@ const Swatches = ({ swatches, product_id }) => {
               className="swatch"
               style={{ backgroundImage: `url(${swatch.image.link})` }}
               onClick={() => history.push({
-                pathname: `/product-details/${product_id}`,
+                pathname: `/product/details/${product_id}`,
                 query: { color: swatch.color_value }
               })}
             />
