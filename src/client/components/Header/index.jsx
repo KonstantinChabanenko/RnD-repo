@@ -24,40 +24,40 @@ const Header = () => {
   const showCategories = (categories) => {
     const newarr = categories.map(category => {
       if (category.categories) {
-        console.log('ZASHLO')
         return (
-          <NavDropdown title={category.name} id="basic-nav-dropdown" show={true}>
-            {showCategories(category.categories)}
-          </NavDropdown>
-        );
+          <li
+            key={category.name}
+            className="value"
+            data-filter-value={category.name}
+            onClick={(e) => {}}
+          >
+            <span className="category-name">{category.name}</span>
+            <ul className="refinement__values">{showCategories(category.categories)}</ul>
+          </li>
+        )
       }
 
-      if(category.parent_category_id !== 'root'){
-        return (
-        <NavDropdown.Item href="#link">{category.name}</NavDropdown.Item>
-        )
-      } else {
       return (
-      <Nav.Link href="#link">{category.name}</Nav.Link>
-      );}
+        <li
+          key={category.name}
+          className="value"
+          data-filter-value={category.name}
+          onClick={(e) => {}}
+        >
+          <span className="category-name">{category.name}</span>
+        </li>
+      )
     });
 
     return newarr;
   };
 
-  return categories ? (
-    <Navbar bg="primary" variant="dark" expand="lg">
+  return categories.length > 0 ? (
+    <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           {showCategories(categories)}
-          {/* <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#link">Link</Nav.Link>
-      <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-      </NavDropdown> */}
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
