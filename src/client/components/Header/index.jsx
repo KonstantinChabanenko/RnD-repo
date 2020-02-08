@@ -26,7 +26,7 @@ const Header = () => {
       if (category.categories) {
         console.log('ZASHLO')
         return (
-          <NavDropdown title={category.name} id="basic-nav-dropdown">
+          <NavDropdown title={category.name} id="basic-nav-dropdown" show={true}>
             {showCategories(category.categories)}
           </NavDropdown>
         );
