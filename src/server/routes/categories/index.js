@@ -28,7 +28,6 @@ module.exports = (fastify, opts, done) => {
     const result = await axios(
       options("/categories/" + request.params.category, queryString)
     );
-    console.log(result);
     reply.code(result.status).send(result.data.categories);
   });
   done();
