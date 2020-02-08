@@ -3,6 +3,7 @@ import { Row, Col } from 'react-bootstrap';
 import Sizes from './Sizes';
 import Swatches from './Swatches';
 import Quantity from './Quantity';
+import Promotions from './Promotions';
 
 const Details = ({ product, setSelectedSize, setSelectedColor }) => (
     <div>
@@ -24,6 +25,7 @@ const Details = ({ product, setSelectedSize, setSelectedColor }) => (
                     {product.stockLevel ? <Quantity stockLevel={product.stockLevel} /> : null}
                 </Col>
             </Row>
+            <Promotions promotions={product.product_promotions} />
         </div>
     </div>
 

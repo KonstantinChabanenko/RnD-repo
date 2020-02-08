@@ -15,12 +15,9 @@ const Sizes = ({ sizes, setSelectedSize }) => {
                 onChange={e => selectAttrHandler(e)}
             >
                 <option value={null}>Select Size</option>
-                {sizes ? sizes.values.map(size => {
-                    console.log(size)
-                    return (
-                        size.orderable ? <option key={size.value} value={size.value}>{size.name}</option> : null
-                    )
-                }) : null}
+                {sizes ? sizes.values.map(size => (
+                    size.orderable ? <option key={size.value} value={size.value}>{size.name}</option> : null
+                )) : null}
             </FormControl>
         </Fragment>
     )
