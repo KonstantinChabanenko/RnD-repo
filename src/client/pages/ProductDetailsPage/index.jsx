@@ -60,26 +60,28 @@ const ProductDetailsPage = () => {
     }, [memoizedGetProductDetails, selectedColor, selectedSize, defaultColor]);
 
     return product ? (
-        <Container>
-            <Row>
-                <Col sm={6}>
-                    <Slider defaultImages={product.images} variants={product.variants} />
-                </Col>
-                <Col sm={6}>
-                    <Details
-                        product={product}
-                        setSelectedSize={setSelectedSize}
-                        setSelectedColor={setSelectedColor}
-                        selectedSize={selectedSize}
-                        selectedColor={selectedColor}
-                    />
-                </Col>
-            </Row>
-            <DescriptionAndDetails
-                shortDescription={product.short_description}
-                longDescription={product.long_description}
-            />
-        </Container>
+        <div className="product-details">
+            <Container>
+                <Row>
+                    <Col sm={6}>
+                        <Slider defaultImages={product.images} variants={product.variants} />
+                    </Col>
+                    <Col sm={6}>
+                        <Details
+                            product={product}
+                            setSelectedSize={setSelectedSize}
+                            setSelectedColor={setSelectedColor}
+                            selectedSize={selectedSize}
+                            selectedColor={selectedColor}
+                        />
+                    </Col>
+                </Row>
+                <DescriptionAndDetails
+                    shortDescription={product.short_description}
+                    longDescription={product.long_description}
+                />
+            </Container>
+        </div>
     ) : (
             <Loader />
         )

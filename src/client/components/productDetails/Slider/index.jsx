@@ -17,7 +17,13 @@ const Slider = ({ defaultImages, variants }) => {
     return (
         <Carousel>
             {images.map((image) => (
-                <Carousel.Item key={image.link}><img src={image.link} alt={image.alt} /></Carousel.Item>
+                <Carousel.Item key={image.link}>
+                    <img
+                        src={image.link}
+                        alt={image.alt}
+                        className="product-details__image"
+                    />
+                </Carousel.Item>
             ))}
         </Carousel>
     )

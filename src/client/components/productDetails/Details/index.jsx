@@ -10,12 +10,13 @@ import SocialIcons from './SocialIcons';
 
 const Details = ({ product, setSelectedSize, setSelectedColor, selectedSize, selectedColor }) => (
     <div>
-        <h1>{product.title}</h1>
-        <div className="product-number">Item No. {product.id}</div>
-        <div className="attributes">
+        <h1 className="product-details__title">{product.title}</h1>
+        <div className="product-details__number mb-4">Item No. {product.id}</div>
+        <div className="product-details__attributes">
             <Swatches
                 colors={product.colors}
                 swatches={product.swatches}
+                selectedColor={selectedColor}
                 setSelectedColor={setSelectedColor}
             />
             <Row>
