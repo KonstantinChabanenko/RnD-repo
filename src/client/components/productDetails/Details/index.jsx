@@ -23,6 +23,7 @@ const Details = ({ product, setSelectedSize, setSelectedColor, selectedSize, sel
                 <Col xs={8}>
                     <Sizes
                         sizes={product.sizes}
+                        selectedSize={selectedSize}
                         setSelectedSize={setSelectedSize}
                     />
                 </Col>

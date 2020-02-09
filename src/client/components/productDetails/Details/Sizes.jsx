@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react';
 import { FormControl } from 'react-bootstrap';
 
-const Sizes = ({ sizes, setSelectedSize }) => {
+const Sizes = ({ sizes, selectedSize, setSelectedSize }) => {
     const selectAttrHandler = (e) => {
         const sizeValue = e.currentTarget.value;
-        setSelectedSize(sizeValue);
+        if (sizeValue !== selectedSize) {
+            setSelectedSize(sizeValue);
+        }
     }
 
     return (
@@ -12,11 +14,18 @@ const Sizes = ({ sizes, setSelectedSize }) => {
             <label>Select Size</label>
             <FormControl
                 as="select"
+                defaultValue=""
                 onChange={e => selectAttrHandler(e)}
             >
-                <option disabled selected>Select Size</option>
+                <option value="">Select Size</option>
                 {sizes ? sizes.values.map(size => (
-                    size.orderable ? <option key={size.value} value={size.value}>{size.name}</option> : null
+                    <option
+                        key={size.value}
+                        value={size.value}
+                        disabled={!size.orderable}
+                    >
+                        {size.name}
+                    </option>
                 )) : null}
             </FormControl>
         </Fragment>

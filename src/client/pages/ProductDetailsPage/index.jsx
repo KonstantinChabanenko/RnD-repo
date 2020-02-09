@@ -24,7 +24,8 @@ const ProductDetailsPage = () => {
                 if (res.variants) {
                     applyAttribute(res, 'sizes', 'c_color', 'c_size', defaultColor);
                 }
-                setProduct(res)
+                setProduct(res);
+                setSelectedColor(defaultColor);
             });
         } else if (selectedColor && !selectedSize) {
             setProduct(prevState => {
@@ -41,6 +42,8 @@ const ProductDetailsPage = () => {
         } else if(selectedColor && selectedSize) {
             setProduct(prevState => {
                 const prevProduct = {...prevState};
+                applyAttribute(prevProduct, 'sizes', 'c_color', 'c_size', selectedColor);
+                applyAttribute(prevProduct, 'colors', 'c_size', 'c_color', selectedSize);
                 const selectedVariant = prevProduct.variants.find(variant => variant.c_color === selectedColor && variant.c_size === selectedSize);
                 prevProduct.id = selectedVariant.id;
                 prevProduct.title = selectedVariant.page_title;
