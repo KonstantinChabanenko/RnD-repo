@@ -3,7 +3,7 @@ const applyAttribute = (productObj, productAttrKey, attrKey1, attrKey2, attrValu
         const productAttr = productObj[productAttrKey].values.find(value => value.value === variant[attrKey2]);
         if (variant[attrKey1] === attrValue && !variant.inventory.orderable) {
             productAttr.orderable = false;
-        } else {
+        } else if (variant[attrKey1] === attrValue) {
             productAttr.orderable = true;
         }
     });

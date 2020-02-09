@@ -1,27 +1,27 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import currencies from '../../static/currencies';
+import RangePrice from './RangePrice';
+import DiscountPrice from './DiscountPrice';
 
 const Prices = ({ priceMax, priceMin, currency, listPrice, product_type }) => {
   const currencySymbol = currencies[currency];
-  const RangePrice = () => (
-    <Fragment>
-      <span className="sale-price">{currencySymbol}{priceMin}</span>
-      <span>-</span>
-      <span className="sale-price">{currencySymbol}{priceMax}</span>
-    </Fragment>
-  )
-  const DiscountPrice = () => (
-    <Fragment>
-      <span className="list-price">{currencySymbol}{listPrice}</span>
-      <span className="sale-price">{currencySymbol}{priceMin}</span>
-    </Fragment>
-  )
 
   switch (product_type) {
     case "master":
       return (
         <div className="product-tile__price">
-          {priceMax ? <RangePrice /> : <DiscountPrice />}
+          {priceMax ?
+            <RangePrice
+                currencySymbol={currencySymbol}
+                priceMin={priceMin}
+                priceMax={priceMax} 
+            /> :
+            <DiscountPrice
+                currencySymbol={currencySymbol}
+                priceMin={priceMin}
+                listPrice={listPrice}
+            />
+        }
         </div>
       )
     case "bundle":

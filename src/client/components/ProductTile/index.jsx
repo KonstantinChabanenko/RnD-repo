@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Prices from './Prices';
+import Prices from '../Price';
 import Swatches from './Swatches';
 
 const ProductTile = ({ product }) => {

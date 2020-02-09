@@ -14,7 +14,7 @@ const Sizes = ({ sizes, setSelectedSize }) => {
                 as="select"
                 onChange={e => selectAttrHandler(e)}
             >
-                <option value={null}>Select Size</option>
+                <option disabled selected>Select Size</option>
                 {sizes ? sizes.values.map(size => (
                     size.orderable ? <option key={size.value} value={size.value}>{size.name}</option> : null
                 )) : null}

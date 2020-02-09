@@ -3,6 +3,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { getProductDetails } from '../../services/productAPI';
 import Slider from '../../components/productDetails/Slider';
 import Details from '../../components/productDetails/Details';
+import DescriptionAndDetails from '../../components/productDetails/DescriptionAndDetails';
 import Loader from '../../components/Loader';
 import { Container, Row, Col } from 'react-bootstrap';
 import applyAttribute from './applyAttribute';
@@ -65,9 +66,19 @@ const ProductDetailsPage = () => {
                     <Slider defaultImages={product.images} variants={product.variants} />
                 </Col>
                 <Col sm={6}>
-                    <Details product={product} setSelectedSize={setSelectedSize} setSelectedColor={setSelectedColor}/>
+                    <Details
+                        product={product}
+                        setSelectedSize={setSelectedSize}
+                        setSelectedColor={setSelectedColor}
+                        selectedSize={selectedSize}
+                        selectedColor={selectedColor}
+                    />
                 </Col>
             </Row>
+            <DescriptionAndDetails
+                shortDescription={product.short_description}
+                longDescription={product.long_description}
+            />
         </Container>
     ) : (
             <Loader />
