@@ -19,7 +19,7 @@ const Details = ({ product, setSelectedSize, setSelectedColor, selectedSize, sel
                 selectedColor={selectedColor}
                 setSelectedColor={setSelectedColor}
             />
-            <Row>
+            <Row className="mb-3">
                 <Col xs={8}>
                     <Sizes
                         sizes={product.sizes}

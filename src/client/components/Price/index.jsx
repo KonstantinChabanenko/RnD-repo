@@ -9,7 +9,7 @@ const Prices = ({ priceMax, priceMin, currency, listPrice, product_type }) => {
   switch (product_type) {
     case "master":
       return (
-        <div className="product-tile__price">
+        <div className="product-details__price text-center">
           {priceMax ?
             <RangePrice
                 currencySymbol={currencySymbol}
@@ -26,11 +26,11 @@ const Prices = ({ priceMax, priceMin, currency, listPrice, product_type }) => {
       )
     case "bundle":
       return (
-        <div className="product-tile__price">{currencySymbol}{priceMin}</div>
+        <div className="product-details__price text-center">{currencySymbol}{priceMin}</div>
       )
     case "set":
       return (
-        <div className="product-tile__price">Starting from {currencySymbol}{priceMin}</div>
+        <div className="product-details__price text-center">Starting from {currencySymbol}{priceMin}</div>
       )
     default:
       return null;

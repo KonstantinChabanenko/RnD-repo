@@ -15,7 +15,7 @@ const Slider = ({ defaultImages, variants }) => {
     }, [color, defaultImages, variants]);
 
     return (
-        <Carousel>
+        <Carousel interval={null}>
             {images.map((image) => (
                 <Carousel.Item key={image.link}>
                     <img

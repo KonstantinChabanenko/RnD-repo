@@ -1,11 +1,11 @@
 import React from 'react';
 
 const SocialIcons = () => (
-    <div className="social-icons">
-        <i className="fab fa-pinterest"></i>
-        <i className="fab fa-facebook-square"></i>
-        <i className="fab fa-twitter"></i>
-        <i className="fas fa-link"></i>
+    <div className="social-icons text-center">
+        <i className="fab fa-pinterest social-icon"></i>
+        <i className="fab fa-facebook-square social-icon"></i>
+        <i className="fab fa-twitter social-icon"></i>
+        <i className="fas fa-link social-icon"></i>
     </div>
 )
 

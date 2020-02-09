@@ -27,20 +27,27 @@
             height: rem-calc(40);
             border: rem-calc(1) solid rgba(0,0,0,.3);
             border-radius: 50%;
-            cursor: pointer;
         }
+    }
+
+    .title {
+        font-family: 'Dosis-Regular';
     }
 }
 
 .swatch-wrapper {
     position: relative;
+    cursor: pointer;
+
+    &[data-disabled="true"] {
+        cursor: not-allowed;
+    }
 
     .checked-mark {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        cursor: pointer;
 
         &::before {
             content: "\f111";
@@ -79,4 +86,9 @@
             font-family: 'Font Awesome 5 Free';
         }
     }
+}
+
+.social-icon {
+    font-size: rem-calc(30);
+    padding-right: rem-calc(12);
 }

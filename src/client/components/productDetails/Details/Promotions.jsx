@@ -2,7 +2,7 @@ import React from 'react';
 import { Accordion, Card } from 'react-bootstrap';
 
 const Promotions = ({ promotions }) => (
-    <div>
+    <div className="product-details__promotions mb-3">
         <Accordion>
             {promotions.map((promotion, index) => (
                 <Card key={promotion.id}>
