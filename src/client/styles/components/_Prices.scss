@@ -1,0 +1,14 @@
+.list-price, .sale-price {
+    font-size: rem-calc(24);
+    line-height: rem-calc(36);
+}
+
+.list-price {
+    margin-right: rem-calc(16);
+    color: $gray-600;
+    text-decoration: line-through;
+}
+
+.sale-price {
+    font-weight: 700;
+}
