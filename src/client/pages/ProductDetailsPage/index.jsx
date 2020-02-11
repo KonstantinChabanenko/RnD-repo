@@ -18,8 +18,53 @@ const ProductDetailsPage = () => {
 
     const memoizedGetProductDetails = useMemo(() => getProductDetails(productId), [productId]);
 
+    // useEffect(() => {
+    //     if (defaultColor && !selectedColor) {
+    //         memoizedGetProductDetails.then(res => {
+    //             if (res.variants) {
+    //                 applyAttribute(res, 'sizes', 'c_color', 'c_size', defaultColor);
+    //             }
+    //             setProduct(res);
+    //             setSelectedColor(defaultColor);
+    //         });
+    //     } else if (selectedColor && !selectedSize) {
+    //         setProduct(prevState => {
+    //             const prevProduct = {...prevState};
+    //             applyAttribute(prevProduct, 'sizes', 'c_color', 'c_size', selectedColor);
+    //             return prevProduct;
+    //         });
+    //     } else if (!selectedColor && selectedSize) {
+    //         setProduct(prevState => {
+    //             const prevProduct = {...prevState};
+    //             applyAttribute(prevProduct, 'colors', 'c_size', 'c_color', selectedSize);
+    //             return prevProduct;
+    //         });
+    //     } else if(selectedColor && selectedSize) {
+    //         setProduct(prevState => {
+    //             const prevProduct = {...prevState};
+    //             applyAttribute(prevProduct, 'sizes', 'c_color', 'c_size', selectedColor);
+    //             applyAttribute(prevProduct, 'colors', 'c_size', 'c_color', selectedSize);
+    //             const selectedVariant = prevProduct.variants.find(variant => variant.c_color === selectedColor && variant.c_size === selectedSize);
+    //             prevProduct.id = selectedVariant.id;
+    //             prevProduct.title = selectedVariant.page_title;
+    //             prevProduct.long_description = selectedVariant.long_description;
+    //             prevProduct.short_description = selectedVariant.short_description;
+    //             prevProduct.priceMin = selectedVariant.price;
+    //             prevProduct.listPrice = selectedVariant.prices ? Math.max(...Object.values(selectedVariant.prices)) : null;
+    //             prevProduct.priceMax = selectedVariant.price_max;
+    //             prevProduct.images = selectedVariant.image_groups[0].images;
+    //             prevProduct.stockLevel = selectedVariant.inventory.ats;
+
+    //             return prevProduct;
+    //         });
+    //     } else {
+    //         memoizedGetProductDetails.then(res => setProduct(res));
+    //     }
+    // }, [memoizedGetProductDetails, selectedColor, selectedSize, defaultColor]);
+
     useEffect(() => {
-        if (defaultColor && !selectedColor) {
+        console.log('test');
+        if (defaultColor && !selectedColor && !product) {
             memoizedGetProductDetails.then(res => {
                 if (res.variants) {
                     applyAttribute(res, 'sizes', 'c_color', 'c_size', defaultColor);
@@ -27,40 +72,12 @@ const ProductDetailsPage = () => {
                 setProduct(res);
                 setSelectedColor(defaultColor);
             });
-        } else if (selectedColor && !selectedSize) {
-            setProduct(prevState => {
-                const prevProduct = {...prevState};
-                applyAttribute(prevProduct, 'sizes', 'c_color', 'c_size', selectedColor);
-                return prevProduct;
-            });
-        } else if (!selectedColor && selectedSize) {
-            setProduct(prevState => {
-                const prevProduct = {...prevState};
-                applyAttribute(prevProduct, 'colors', 'c_size', 'c_color', selectedSize);
-                return prevProduct;
-            });
-        } else if(selectedColor && selectedSize) {
-            setProduct(prevState => {
-                const prevProduct = {...prevState};
-                applyAttribute(prevProduct, 'sizes', 'c_color', 'c_size', selectedColor);
-                applyAttribute(prevProduct, 'colors', 'c_size', 'c_color', selectedSize);
-                const selectedVariant = prevProduct.variants.find(variant => variant.c_color === selectedColor && variant.c_size === selectedSize);
-                prevProduct.id = selectedVariant.id;
-                prevProduct.title = selectedVariant.page_title;
-                prevProduct.long_description = selectedVariant.long_description;
-                prevProduct.short_description = selectedVariant.short_description;
-                prevProduct.priceMin = selectedVariant.price;
-                prevProduct.listPrice = selectedVariant.prices ? Math.max(...Object.values(selectedVariant.prices)) : null;
-                prevProduct.priceMax = selectedVariant.price_max;
-                prevProduct.images = selectedVariant.image_groups[0].images;
-                prevProduct.stockLevel = selectedVariant.inventory.ats;
-
-                return prevProduct;
-            });
-        } else {
+            console.log('test1');
+        } else if (!product) {
             memoizedGetProductDetails.then(res => setProduct(res));
+            console.log('test2');
         }
-    }, [memoizedGetProductDetails, selectedColor, selectedSize, defaultColor]);
+    }, [defaultColor, memoizedGetProductDetails, selectedColor, product]);
 
     return product ? (
         <div className="product-details">
@@ -76,6 +93,7 @@ const ProductDetailsPage = () => {
                             setSelectedColor={setSelectedColor}
                             selectedSize={selectedSize}
                             selectedColor={selectedColor}
+                            setProduct={setProduct}
                         />
                     </Col>
                 </Row>

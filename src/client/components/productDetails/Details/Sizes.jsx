@@ -1,11 +1,17 @@
 import React, { Fragment } from 'react';
 import { FormControl } from 'react-bootstrap';
+import applyAttribute from '../../../pages/ProductDetailsPage/applyAttribute';
 
-const Sizes = ({ sizes, selectedSize, setSelectedSize }) => {
+const Sizes = ({ sizes, selectedSize, setSelectedSize, setProduct }) => {
     const selectAttrHandler = (e) => {
         const sizeValue = e.currentTarget.value;
         if (sizeValue !== selectedSize) {
             setSelectedSize(sizeValue);
+            setProduct(prevState => {
+                const prevProduct = {...prevState};
+                applyAttribute(prevProduct, 'colors', 'c_size', 'c_color', sizeValue);
+                return prevProduct;
+            });
         }
     }
 

@@ -1,11 +1,17 @@
 import React from 'react';
+import applyAttribute from '../../../pages/ProductDetailsPage/applyAttribute';
 
-const Swatches = ({ colors, swatches, selectedColor, setSelectedColor }) => {
+const Swatches = ({ colors, swatches, selectedColor, setSelectedColor, setProduct }) => {
     const clickHandler = (e) => {
         const colorValue = e.currentTarget.dataset.colorValue;
         const isDisabled = e.currentTarget.dataset.disabled;
         if (colorValue !== selectedColor && !isDisabled) {
             setSelectedColor(colorValue);
+            setProduct(prevState => {
+                const prevProduct = {...prevState};
+                applyAttribute(prevProduct, 'sizes', 'c_color', 'c_size', colorValue);
+                return prevProduct;
+            });
         }
     }
 

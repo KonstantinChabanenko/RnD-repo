@@ -8,7 +8,7 @@ import Prices from '../../Price';
 import AddProductBtn from './AddProductBtn';
 import SocialIcons from './SocialIcons';
 
-const Details = ({ product, setSelectedSize, setSelectedColor, selectedSize, selectedColor }) => (
+const Details = ({ product, setSelectedSize, setSelectedColor, selectedSize, selectedColor, setProduct }) => (
     <div>
         <h1 className="product-details__title">{product.title}</h1>
         <div className="product-details__number mb-4">Item No. {product.id}</div>
@@ -18,6 +18,7 @@ const Details = ({ product, setSelectedSize, setSelectedColor, selectedSize, sel
                 swatches={product.swatches}
                 selectedColor={selectedColor}
                 setSelectedColor={setSelectedColor}
+                setProduct={setProduct}
             />
             <Row className="mb-3">
                 <Col xs={8}>
@@ -25,6 +26,7 @@ const Details = ({ product, setSelectedSize, setSelectedColor, selectedSize, sel
                         sizes={product.sizes}
                         selectedSize={selectedSize}
                         setSelectedSize={setSelectedSize}
+                        setProduct={setProduct}
                     />
                 </Col>
                 <Col xs={4}>
