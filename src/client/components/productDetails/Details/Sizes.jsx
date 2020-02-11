@@ -5,7 +5,14 @@ import applyAttribute from '../../../pages/ProductDetailsPage/applyAttribute';
 const Sizes = ({ sizes, selectedSize, setSelectedSize, setProduct }) => {
     const selectAttrHandler = (e) => {
         const sizeValue = e.currentTarget.value;
-        if (sizeValue !== selectedSize) {
+        if (!sizeValue) {
+            setSelectedSize(null);
+            setProduct(prevState => {
+                const prevProduct = {...prevState};
+                prevProduct.colors.values = prevState.colors.values.map(color => ({...color, orderable: true}));
+                return prevProduct;
+            });
+        } else if (sizeValue !== selectedSize) {
             setSelectedSize(sizeValue);
             setProduct(prevState => {
                 const prevProduct = {...prevState};
