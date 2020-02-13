@@ -10,7 +10,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" render={TempPage} />
-          <Route path="/categories/:categoryId" component={ProductListingPage} />
+          <Route path="/:parentCategory/:categoryId" component={ProductListingPage} />
         </Switch>
       </Router>
     </div>
