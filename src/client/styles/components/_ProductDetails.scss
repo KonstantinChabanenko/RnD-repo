@@ -92,3 +92,9 @@
     font-size: rem-calc(30);
     padding-right: rem-calc(12);
 }
+
+.add-product {
+    .btn[disabled] {
+        cursor: initial;
+    }
+}

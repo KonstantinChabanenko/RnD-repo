@@ -1,8 +1,10 @@
 import productActionTypes from '../actionTypes/productActionTypes';
+import { applyAttribute, setSelectedVariant } from '../../scripts/product/productHelper';
 
 const initState = {
     currentProduct: null,
     isLoading: false,
+    currentVariant: null,
 }
 
 const productReducer = (state = initState, action) => {
@@ -15,7 +17,7 @@ const productReducer = (state = initState, action) => {
 
         case productActionTypes.GET_PRODUCT_BY_ID__SUCCESS:
             return {
-                currentProduct: currentProduct,
+                currentProduct: action.currentProduct,
                 isLoading: false,
             }
 
@@ -24,6 +26,31 @@ const productReducer = (state = initState, action) => {
                 currentProduct: null,
                 isLoading: false,
             }
+
+        case productActionTypes.SELECT_COLOR:
+            const colorUpdatedProduct = { ...state.currentProduct };
+            const colorValue = action.colorValue;
+            colorUpdatedProduct.selectedColor = colorValue;
+            applyAttribute(colorUpdatedProduct, 'sizes', 'c_color', 'c_size', colorValue);
+
+            return {
+                ...state,
+                currentProduct: colorUpdatedProduct,
+                currentVariant: colorUpdatedProduct.selectedSize && colorUpdatedProduct.selectedColor ? setSelectedVariant(colorUpdatedProduct) : null,
+            }
+
+        case productActionTypes.SELECT_SIZE:
+            const sizeUpdatedProduct = { ...state.currentProduct };
+            const sizeValue = action.sizeValue;
+            sizeUpdatedProduct.selectedSize = sizeValue;
+            applyAttribute(sizeUpdatedProduct, 'colors', 'c_size', 'c_color', sizeValue);
+
+            return {
+                ...state,
+                currentProduct: sizeUpdatedProduct,
+                currentVariant: sizeUpdatedProduct.selectedColor && sizeUpdatedProduct.selectedSize ? setSelectedVariant(sizeUpdatedProduct) : null,
+            }
+
         default:
             return state;
     }

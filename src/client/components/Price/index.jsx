@@ -33,7 +33,22 @@ const Prices = ({ priceMax, priceMin, currency, listPrice, product_type }) => {
         <div className="product-details__price text-center">Starting from {currencySymbol}{priceMin}</div>
       )
     default:
-      return null;
+      return (
+        <div className="product-details__price text-center">
+          {priceMax ?
+            <RangePrice
+                currencySymbol={currencySymbol}
+                priceMin={priceMin}
+                priceMax={priceMax} 
+            /> :
+            <DiscountPrice
+                currencySymbol={currencySymbol}
+                priceMin={priceMin}
+                listPrice={listPrice}
+            />
+        }
+        </div>
+      )
   }
 }
 
