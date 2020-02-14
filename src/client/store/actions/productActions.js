@@ -1,9 +1,9 @@
 import productActionTypes from '../actionTypes/productActionTypes';
 
-export const productActions = {
-    getProductByIdStart: product_id => ({
+const productActions = {
+    getProductByIdStart: productId => ({
         type: productActionTypes.GET_PRODUCT_BY_ID__START,
-        product_id,
+        productId,
     }),
       
     getProductByIdSuccess: (product) => ({
@@ -14,4 +14,16 @@ export const productActions = {
     getProductByIdFailure: () => ({
         type: productActionTypes.GET_PRODUCT_BY_ID__FAILURE,
     }),
+
+    selectColor: (colorValue) => ({
+        type: productActionTypes.SELECT_COLOR,
+        colorValue,
+    }),
+
+    selectSize: (sizeValue) => ({
+        type: productActionTypes.SELECT_SIZE,
+        sizeValue,
+    })
 };
+
+export default productActions;
