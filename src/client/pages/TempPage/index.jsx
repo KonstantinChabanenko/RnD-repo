@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../../components/Header';
 
 const TempPage = () => (
-<Header />
+  <Header />
 )
 
 export default TempPage;
