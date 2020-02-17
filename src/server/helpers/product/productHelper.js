@@ -23,7 +23,9 @@ export const getProductDetails = async product => {
     currency: product.currency,
     long_description: product.long_description,
     short_description: product.short_description,
-    product_promotions: product.product_promotions
+    product_promotions: product.product_promotions,
+    sizes: product.variation_attributes.find(attribute => attribute.id === 'size'),
+    colors: product.variation_attributes.find(attribute => attribute.id === 'color'),
   };
 
   if (product.type.master) {
@@ -126,7 +128,8 @@ export const getProductSwatches = variants => {
       uniqueColors.push(variant.c_color);
       swatches.push({
         image: variant.image_groups[3].images[0],
-        color_value: variant.c_color
+        color_value: variant.c_color,
+        inventory: variant.inventory,
       });
     }
   }

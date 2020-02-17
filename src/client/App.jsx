@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ProductListingPage } from './pages';
-import TempPage  from './pages/TempPage';
+import { ProductListingPage, ProductDetailsPage } from './pages';
 import './styles/main.scss';
 
 function App() {
@@ -11,6 +10,7 @@ function App() {
         <Switch>
           <Route exact path="/" render={TempPage} />
           <Route path="/categories/:categoryId" component={ProductListingPage} />
+          <Route path="/product/details/:productId" component={ProductDetailsPage} />
         </Switch>
       </Router>
     </div>
