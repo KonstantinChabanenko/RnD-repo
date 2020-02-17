@@ -2,7 +2,7 @@ const config = require('../../config');
 const req = require("request");
 
 module.exports = (fastify, opts, done) => {
-  fastify.get('/product_search', (request, reply) => {
+  fastify.get('/search', (request, reply) => {
     let queryString = '';
     if (Object.entries(request.query).length !== 0) {
     for (let [key, value] of Object.entries(request.query)) {
