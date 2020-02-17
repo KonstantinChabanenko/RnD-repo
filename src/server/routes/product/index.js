@@ -2,6 +2,7 @@ const config = require("../../config");
 const req = require("request");
 const axios = require("axios");
 const token = require("../../config/auth");
+const {apiGetOptions, queryStringBuilder} = require('../../helpers/api/apiHelper');
 const {
   getProductDetails,
   getProductListPrice,
@@ -9,60 +10,17 @@ const {
 } = require("../../helpers/product/productHelper");
 
 module.exports = (fastify, opts, done) => {
-  fastify.get("/products/:params", (request, reply) => {
-    let queryString = "";
-    if (Object.entries(request.query).length !== 0) {
-      for (let [key, value] of Object.entries(request.query)) {
-        queryString += key + "=" + value + "&";
-      }
-      queryString = queryString.slice(0, queryString.length - 1);
-      console.log("QUERYSTRING: " + queryString);
-    }
-    console.log("PARAMS: " + request.params.params);
-    let options = {
-      method: "GET",
-      url:
-        config.url +
-        "/products/" +
-        request.params.params +
-        (queryString ? "?" + queryString : ""),
-      json: true,
-      headers: {
-        "Content-Type": "application/json",
-        "x-dw-client-id": config.client_id
-      }
-    };
-
-    req(options, function(error, response) {
-      if (error) throw new Error(error);
-      reply.code(response.statusCode).send(response.body);
-      return response;
-    });
-  });
-  done();
-};
-
-module.exports = (fastify, opts, done) => {
+  
+/////////////////////////////////////////////////////////////////
+// #ROUTE: GET:/product/details/:product_id /////////////////////
+////////////////////////////////////////////////////////////////
   fastify.get("/product/details/:product_id", async (request, reply) => {
-    const options = (url, queryString, method, body) => {
-      return {
-        method: method,
-        url: config.url + url + (queryString ? "?" + queryString : ""),
-        json: true,
-        headers: {
-          "Content-Type": "application/json",
-          "x-dw-client-id": config.client_id,
-          Authorization: "Bearer " + token.get()
-        }
-      };
-    };
 
     await axios.post("http://127.0.0.1:8000/customers/auth", { type: "guest" });
     const product_result = await axios(
-      options(
+      apiGetOptions(
         `/products/${request.params.product_id}`,
-        "expand=variations,images,prices,promotions",
-        "GET"
+        "expand=variations,images,prices,promotions"
       )
     );
 
@@ -70,7 +28,7 @@ module.exports = (fastify, opts, done) => {
 
     const detailedProduct = await getProductDetails(product);
     const promotions = await axios(
-      options(
+      apiGetOptions(
         `/promotions/(${detailedProduct.product_promotions
           .map(promotion => promotion.promotion_id)
           .toString()})`
@@ -88,5 +46,19 @@ module.exports = (fastify, opts, done) => {
     }
     reply.code(200).send(detailedProduct);
   });
+
+
+////////////////////////////////////////////////////////////////
+// #ROUTE: GET:/products/:params ///////////////////////////////
+////////////////////////////////////////////////////////////////
+  fastify.get("/products/:params", (request, reply) => {
+    let queryString = queryStringBuilder(request.query);
+    req(apiGetOptions('/products/' + request.params.params, queryString), function(error, response) {
+      if (error) throw new Error(error);
+      reply.code(response.statusCode).send(response.body);
+      return response;
+    });
+  });
+
   done();
 };

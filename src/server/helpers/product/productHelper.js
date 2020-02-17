@@ -14,6 +14,7 @@ const options = (url, queryString) => {
     }
   };
 };
+
 export const getProductDetails = async product => {
   let tempProduct = {
     id: product.id,
@@ -104,6 +105,26 @@ export const getReadyProducts = async products => {
 
   return Promise.all(temp);
 };
+
+export const getDetailedProducts = (detailedProducts) => {
+  return detailedProducts.map(product => {
+    let tempProduct = {
+      id: product.id,
+      imageSrc: product.imageSrc,
+      imageAlt: product.imageAlt,
+      product_type: product.product_type,
+      priceMin: product.priceMin,
+      currency: product.currency,
+      priceMax: product.priceMax,
+      title: product.title
+    };
+    if (product.product_type === "master") {
+      tempProduct.listPrice = getProductListPrice(product.variants);
+      tempProduct.swatches = getProductSwatches(product.variants);
+    }
+    return tempProduct;
+  });
+}
 
 export const getProductListPrice = variants => {
   const variantsPrices = variants.map(variant =>
