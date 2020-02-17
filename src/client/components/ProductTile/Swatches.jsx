@@ -6,12 +6,14 @@ const Swatches = ({ swatches, product_id }) => (
     <div className="product-tile__color-swatches">
       {
         swatches.map(swatch => (
-          <Link to={{
-            pathname: `/product/details/${product_id}`,
-            query: { color: swatch.color_value }
-          }}>
+          <Link
+            to={{
+              pathname: `/product/details/${product_id}`,
+              query: { color: swatch.color_value }
+            }}
+            key={swatch.image.title}
+          >
             <img
-              key={swatch.image.title}
               src={swatch.image.link}
               alt={swatch.image.alt}
               className="swatch"

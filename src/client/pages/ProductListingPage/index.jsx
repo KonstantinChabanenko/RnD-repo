@@ -6,6 +6,7 @@ import { Col, Row, Container, Button } from 'react-bootstrap';
 import Loader from '../../components/Loader';
 import GridHeader from '../../components/GridHeader';
 import { getProducts } from '../../services/productAPI';
+import PageLayout from '../../layouts/PageLayout';
 
 const ProductListingPage = () => {
   const { categoryId } = useParams();
@@ -64,33 +65,35 @@ const ProductListingPage = () => {
   }, [categoryId, selectedRefinements, selectedSortingOption]);
 
   return products.items && filters.items && sortingOptions.items ? (
-    <Container>
-      <GridHeader
-        sortingOptions={sortingOptions.items}
-        selectedSortingOption={selectedSortingOption}
-        setSelectedSortingOption={setSelectedSortingOption}
-      />
-      <Row>
-        <Col md={3}>
-        <div className="refinement-bar">
-          <Button
-            variant="outline-primary"
-            className="reset-btn w-100 mb-4"
-            onClick={resetFilters}
-          >
-            Reset
-          </Button>
-          <RefinementBar
-            filters={filters.items}
-            selectedRefinements={selectedRefinements}
-            setSelectedRefinements={setSelectedRefinements}
-          />
-        </div>
-        </Col>
-        <Col md={9}><ProductTilesGrid products={products.items} /></Col>
-      </Row>
-      {products.loaded && filters.loaded && sortingOptions.loaded ? null : <Loader />}
-    </Container>
+    <PageLayout>
+      <Container>
+        <GridHeader
+          sortingOptions={sortingOptions.items}
+          selectedSortingOption={selectedSortingOption}
+          setSelectedSortingOption={setSelectedSortingOption}
+        />
+        <Row>
+          <Col md={3}>
+          <div className="refinement-bar">
+            <Button
+              variant="outline-primary"
+              className="reset-btn w-100 mb-4"
+              onClick={resetFilters}
+            >
+              Reset
+            </Button>
+            <RefinementBar
+              filters={filters.items}
+              selectedRefinements={selectedRefinements}
+              setSelectedRefinements={setSelectedRefinements}
+            />
+          </div>
+          </Col>
+          <Col md={9}><ProductTilesGrid products={products.items} /></Col>
+        </Row>
+        {products.loaded && filters.loaded && sortingOptions.loaded ? null : <Loader />}
+      </Container>
+    </PageLayout>
   ) :
   (<Loader />)
 }

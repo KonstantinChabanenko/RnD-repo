@@ -8,10 +8,10 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path="/" render={TempPage} />
+          <Route exact path="/" component={TempPage} />
           <Route path="/product/details/:productId" component={ProductDetailsPage} />
           <Route path="/:parentCategoryId/:categoryId" component={ProductListingPage} />
-          <Route path="/:categoryId" render={() => <div>test</div>} />
+          <Route path="/:categoryId" component={TempPage} />
         </Switch>
       </Router>
     </div>

@@ -9,7 +9,12 @@ const NavItem = ({ children, linkTo, catName }) => {
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
     >
-      <NavLink to={linkTo}>{catName} {children ? <i class="fas fa-caret-down"></i> : null}</NavLink>
+      <NavLink
+        to={linkTo}
+        className={`nav-link${show ? ' show' : ''}`}
+      >
+        {catName} {children ? <i className="fas fa-caret-down"></i> : null}
+      </NavLink>
       {children ? (
         <ul className={`dropdown-menu${show ? ' show' : ''}`}>{children}</ul>
       ) : (
