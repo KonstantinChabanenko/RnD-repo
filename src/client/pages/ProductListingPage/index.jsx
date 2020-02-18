@@ -10,6 +10,7 @@ import PageLayout from '../../layouts/PageLayout';
 
 const ProductListingPage = () => {
   const { categoryId } = useParams();
+  const [currentCategory, setCurrentCategory] = useState(categoryId);
   const initProductsState = { items: null, loaded: false };
   const initFiltersState = { items: null, loaded: false };
   const initSortingOptions = { items: null, loaded: false };
@@ -29,25 +30,31 @@ const ProductListingPage = () => {
   useEffect(() => {
     const params = {};
     Object.keys(selectedRefinements).forEach((key, index) => {
-      if (key !== "categoryId") {
-        switch (key) {
-          case 'colors':
-            params[`refine_${index}`] = `c_refinementColor=${selectedRefinements[key].join('|')}`;
-            break;
-          case 'isNew':
-            if (selectedRefinements.isNew) {
-              params[`refine_${index}`] = `c_isNew`;
-            }
-            break;
-          case 'sizes':
-            params[`refine_${index}`] = `c_size=${selectedRefinements[key].join('|')}`;
-            break;
-          case 'price':
-            params[`refine_${index}`] = `price=${selectedRefinements[key]}`;
-            break;
-          default:
-            return null;
-        }
+      switch (key) {
+        case 'categoryId':
+          if (categoryId !== currentCategory) {
+            params[`refine_${index}`] = `cgid=${categoryId}`;
+            setCurrentCategory(categoryId);
+          } else {
+            params[`refine_${index}`] = `cgid=${selectedRefinements[key]}`;
+          }
+          break;
+        case 'colors':
+          params[`refine_${index}`] = `c_refinementColor=${selectedRefinements[key].join('|')}`;
+          break;
+        case 'isNew':
+          if (selectedRefinements.isNew) {
+            params[`refine_${index}`] = `c_isNew`;
+          }
+          break;
+        case 'sizes':
+          params[`refine_${index}`] = `c_size=${selectedRefinements[key].join('|')}`;
+          break;
+        case 'price':
+          params[`refine_${index}`] = `price=${selectedRefinements[key]}`;
+          break;
+        default:
+          return null;
       }
     });
 
@@ -57,7 +64,7 @@ const ProductListingPage = () => {
 
     setProducts(prevState => ({ ...prevState, loaded: false }));
     setFilters(prevState => ({ ...prevState, loaded: false }));
-    getProducts(selectedRefinements.categoryId, params).then(res => {
+    getProducts(params).then(res => {
       setProducts({ items: res.products, loaded: true });
       setFilters({ items: res.refinements, loaded: true });
       setSortingOptions({ items: res.sortingOptions, loaded: true });
