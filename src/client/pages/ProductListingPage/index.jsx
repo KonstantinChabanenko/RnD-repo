@@ -29,15 +29,15 @@ const ProductListingPage = () => {
 
   useEffect(() => {
     const params = {};
+    if (categoryId !== currentCategory) {
+      setCurrentCategory(categoryId);
+      setSelectedRefinements({ categoryId, isNew: false });
+    }
+    
     Object.keys(selectedRefinements).forEach((key, index) => {
       switch (key) {
         case 'categoryId':
-          if (categoryId !== currentCategory) {
-            params[`refine_${index}`] = `cgid=${categoryId}`;
-            setCurrentCategory(categoryId);
-          } else {
-            params[`refine_${index}`] = `cgid=${selectedRefinements[key]}`;
-          }
+          params[`refine_${index}`] = `cgid=${selectedRefinements[key]}`;
           break;
         case 'colors':
           params[`refine_${index}`] = `c_refinementColor=${selectedRefinements[key].join('|')}`;
