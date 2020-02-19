@@ -5,7 +5,7 @@ const Swatches = ({ swatches, product_id }) => (
   <Fragment>
     <div className="product-tile__color-swatches">
       {
-        swatches.map(swatch => (
+        swatches.map(swatch => swatch.image ? (
           <Link
             to={{
               pathname: `/product/details/${product_id}`,
@@ -20,7 +20,7 @@ const Swatches = ({ swatches, product_id }) => (
               style={{ backgroundImage: `url(${swatch.image.link})` }}
             />
           </Link>
-        ))
+        ) : null)
       }
     </div>
   </Fragment>

@@ -148,7 +148,7 @@ export const getProductSwatches = variants => {
     if (uniqueColors.indexOf(variant.c_color) === -1) {
       uniqueColors.push(variant.c_color);
       swatches.push({
-        image: variant.image_groups[3].images[0],
+        image: variant.image_groups[3] ? variant.image_groups[3].images[0] : null,
         color_value: variant.c_color,
         inventory: variant.inventory,
       });
