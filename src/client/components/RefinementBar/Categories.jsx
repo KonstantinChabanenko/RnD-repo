@@ -1,8 +1,13 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
 import applySingleRefinement from './applySingleRefinement';
 
-const Categories = ({ categories, selectedRefinements, setSelectedRefinements }) => {
+const Categories = ({ categories }) => {
+  const dispatch = useDispatch();
+  const productsReducer = useSelector(state => state.productsReducer);
+  const { selectedRefinements, selectedSortingOption } = productsReducer;
+  
   const showCategories = (values) => {
     const newarr = values.map(value => {
       if (value.values) {
@@ -11,7 +16,7 @@ const Categories = ({ categories, selectedRefinements, setSelectedRefinements })
             key={value.value}
             className="value"
             data-filter-value={value.value}
-            onClick={(e) => applySingleRefinement(e, selectedRefinements, setSelectedRefinements, "categoryId")}
+            onClick={(e) => applySingleRefinement(e, dispatch, selectedRefinements, 'categoryId', selectedSortingOption)}
           >
             {value.value === selectedRefinements.categoryId ? <i className="fas fa-check-circle"></i> : <i className="far fa-circle"></i>}
             <span className="category-name">{value.label}</span>
@@ -25,7 +30,7 @@ const Categories = ({ categories, selectedRefinements, setSelectedRefinements })
           key={value.value}
           className="value"
           data-filter-value={value.value}
-          onClick={(e) => applySingleRefinement(e, selectedRefinements, setSelectedRefinements, "categoryId")}
+          onClick={(e) => applySingleRefinement(e, dispatch, selectedRefinements, 'categoryId')}
         >
           {value.value === selectedRefinements.categoryId ? <i className="fas fa-check-circle"></i> : <i className="far fa-circle"></i>}
           <span className="category-name">{value.label}</span>

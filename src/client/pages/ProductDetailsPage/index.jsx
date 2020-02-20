@@ -7,6 +7,7 @@ import Loader from '../../components/Loader';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import productActions from '../../store/actions/productActions';
+import PageLayout from '../../layouts/PageLayout';
 
 const ProductDetailsPage = () => {
   const { productId } = useParams();
@@ -23,19 +24,21 @@ const ProductDetailsPage = () => {
   }
 
   return product ? (
-    <div className="product-details">
-      <Container>
-        <Row>
-          <Col sm={6}>
-            <Slider />
-          </Col>
-          <Col sm={6}>
-            <Details />
-          </Col>
-        </Row>
-        <DescriptionAndDetails />
-      </Container>
-    </div>
+    <PageLayout>
+      <div className="product-details">
+        <Container>
+          <Row>
+            <Col sm={6}>
+              <Slider />
+            </Col>
+            <Col sm={6}>
+              <Details />
+            </Col>
+          </Row>
+          <DescriptionAndDetails />
+        </Container>
+      </div>
+    </PageLayout>
   ) : (
       <div>The product wasn't found</div>
     )

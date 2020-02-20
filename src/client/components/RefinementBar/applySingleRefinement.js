@@ -1,8 +1,10 @@
-const applySingleRefinement = (e, state, setState, keyValue) => {
+import productActions from '../../store/actions/productActions';
+
+const applySingleRefinement = (e, dispatch, selectedRefinements, keyValue, selectedSortingOption) => {
     e.stopPropagation();
-    const selectedFilterValue = e.currentTarget.dataset.filterValue;
-    if (selectedFilterValue !== state[keyValue]) {
-        setState(prevState => ({ ...prevState, [keyValue]: selectedFilterValue }))
+    const selectedRefinement = e.currentTarget.dataset.filterValue;
+    if (selectedRefinement !== selectedRefinements[keyValue]) {
+        dispatch(productActions.selectRefinement(keyValue, selectedRefinement, selectedRefinements, selectedSortingOption));
     }
 }
 

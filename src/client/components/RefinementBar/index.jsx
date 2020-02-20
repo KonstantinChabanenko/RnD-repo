@@ -4,26 +4,31 @@ import Colors from './Colors';
 import NewArrival from './NewArrival';
 import Sizes from './Sizes';
 import Prices from './Prices';
+import { useSelector } from 'react-redux';
 
-const RefinementBar = ({ filters, ...props }) => (
-  <div className="refinements">
-    {filters.map(filter => {
-      switch(filter.attribute_id) {
-        case "cgid":
-          return <Categories key={filter.attribute_id} categories={filter} {...props} />;
-        case "c_refinementColor":
-          return <Colors key={filter.attribute_id} colors={filter} {...props} />;
-        case "c_isNew":
-          return <NewArrival key={filter.attribute_id} filter={filter} {...props} />
-        case "c_size":
-          return <Sizes key={filter.attribute_id} sizes={filter} {...props} />
-        case "price":
-          return <Prices key={filter.attribute_id} prices={filter} {...props} />
-        default:
-          return null;
-      }
-    })}
-  </div>
-)
+const RefinementBar = () => {
+  const refinements = useSelector(state => state.productsReducer.refinements);
+
+  return (
+    <div className="refinements">
+      {refinements.map(refinement => {
+        switch(refinement.attribute_id) {
+          case "cgid":
+            return <Categories key={refinement.attribute_id} categories={refinement} />;
+          case "c_refinementColor":
+            return <Colors key={refinement.attribute_id} colors={refinement} />;
+          case "c_isNew":
+            return <NewArrival key={refinement.attribute_id} isNew={refinement} />
+          case "c_size":
+            return <Sizes key={refinement.attribute_id} sizes={refinement} />
+          case "price":
+            return <Prices key={refinement.attribute_id} prices={refinement} />
+          default:
+            return null;
+        }
+      })}
+    </div>
+  )
+}
 
 export default RefinementBar;

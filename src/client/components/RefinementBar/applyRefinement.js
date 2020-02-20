@@ -1,29 +1,20 @@
-const applyRefinement = (e, state, setState, keyValue) => {
+import productActions from '../../store/actions/productActions';
+
+const applyRefinement = (e, dispatch, selectedRefinements, keyValue, selectedSortingOption) => {
     e.stopPropagation();
-    const selectedFilterValue = e.currentTarget.dataset.filterValue;
-    const selectedFilter = state[keyValue] ? state[keyValue].find(filterValue => filterValue === selectedFilterValue) : null;
-    if (!selectedFilter) {
-        setState(prevState => {
-            const updatedFilterValues = prevState[keyValue] ? prevState[keyValue] : [];
-            updatedFilterValues.push(selectedFilterValue);
-
-            return ({
-                ...prevState,
-                [keyValue]: updatedFilterValues
-            })
-        });
+    const selectedRefinementValue = e.currentTarget.dataset.filterValue;
+    const selectedRefinement = selectedRefinements[keyValue] ? selectedRefinements[keyValue].find(filterValue => filterValue === selectedRefinementValue) : null;
+    let updatedRefinementValues;
+    if (!selectedRefinement) {
+        updatedRefinementValues = selectedRefinements[keyValue] || [];
+        updatedRefinementValues.push(selectedRefinementValue);
     } else {
-        setState(prevState => {
-            const updatedFilterValues = prevState[keyValue];
-            const selectedFilterIndex = updatedFilterValues.indexOf(selectedFilter);
-            updatedFilterValues.splice(selectedFilterIndex, 1);
-
-            return ({
-                ...prevState,
-                [keyValue]: updatedFilterValues
-            })
-        });
+        updatedRefinementValues = selectedRefinements[keyValue];
+        const selectedRefinementIndex = updatedRefinementValues.indexOf(selectedRefinement);
+        updatedRefinementValues.splice(selectedRefinementIndex, 1);
     }
+
+    dispatch(productActions.selectRefinement(keyValue, updatedRefinementValues, selectedRefinements, selectedSortingOption));
 }
 
 export default applyRefinement;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import productActions from '../../../store/actions/productActions';
@@ -6,14 +6,15 @@ import productActions from '../../../store/actions/productActions';
 const Swatches = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const defaultColor = location.query ? location.query['color'] : null;
+  const defaultColor = useRef(location.query ? location.query['color'] : null);
   const product = useSelector(state => state.productReducer.currentProduct);
 
   useEffect(() => {
-    if (defaultColor && !product.selectedColor) {
-      dispatch(productActions.selectColor(defaultColor));
+    if (defaultColor.current && !product.selectedColor) {
+      dispatch(productActions.selectColor(defaultColor.current));
+      defaultColor.current = null;
     }
-  }, [defaultColor, dispatch, product]);
+  }, [dispatch, product]);
 
   const clickHandler = (e) => {
     const colorValue = e.currentTarget.dataset.colorValue;
