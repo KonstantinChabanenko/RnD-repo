@@ -13,19 +13,27 @@ const Colors = ({ colors }) => {
       <Card.Header>{colors.label}</Card.Header>
       <Card.Body>
         <ul className="refinement__values top-level">
-          {colors.values.map(color => (
-            <li key={color.value} className="color-attribute">
-              <div className="swatch-wrapper"
-                data-filter-value={color.value}
-                onClick={(e) => applyRefinement(e, dispatch, selectedRefinements, "colors", selectedSortingOption)}
-              >
-                <span
-                  className={`value swatch-circle swatch-circle-${color.presentation_id}${color.hit_count === 0 ? ' disabled' : ''}`}
-                ></span>
-                {selectedRefinements.colors && selectedRefinements.colors.some(selectedColor => selectedColor === color.value) ? <span className="checked-mark"></span> : null}
-              </div>
-            </li>
-          ))}
+          {colors.values.map(color => {
+            const disabled = color.hit_count === 0;
+
+            return (
+              <li key={color.value} className="color-attribute">
+                <div className="swatch-wrapper"
+                  data-filter-value={color.value}
+                  onClick={(e) => {
+                    if (!disabled) {
+                      applyRefinement(e, dispatch, selectedRefinements, "colors", selectedSortingOption)}
+                    }
+                  }
+                >
+                  <span
+                    className={`value swatch-circle swatch-circle-${color.presentation_id}${disabled ? ' disabled' : ''}`}
+                  ></span>
+                  {selectedRefinements.colors && selectedRefinements.colors.some(selectedColor => selectedColor === color.value) ? <span className="checked-mark"></span> : null}
+                </div>
+              </li>
+            )
+          })}
         </ul>
       </Card.Body>
     </Card>
