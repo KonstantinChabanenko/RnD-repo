@@ -38,7 +38,7 @@
         height: 100%;
         color: $white;
 
-        &.show, &.active {
+        &.show {
             color: $gray-800;
             background-color: $white;
         }
