@@ -16,6 +16,7 @@ const Header = () => {
 
   useEffect(() => {
     getCategories("root", { levels: 5 }).then(response => {
+      console.log(response);
       setCategories(response);
     });
   }, []);

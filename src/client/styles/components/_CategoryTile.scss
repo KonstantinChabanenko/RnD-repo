@@ -1,0 +1,9 @@
+.category-tile {
+    &__title {
+        left: rem-calc(30);
+        bottom: rem-calc(30);
+        font-family: 'Dosis-Regular';
+        text-decoration: none;
+        color: $white;
+    }
+}
