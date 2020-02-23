@@ -22,7 +22,7 @@ const CategoryTilesGrid = () => {
                 <Container>
                     <Row>
                         {categories.map(category => (
-                            <Col sm={6} md={4}>
+                            <Col key={category.id} sm={6} md={4}>
                                 <CategoryTile category={category} />
                             </Col>
                         ))}
