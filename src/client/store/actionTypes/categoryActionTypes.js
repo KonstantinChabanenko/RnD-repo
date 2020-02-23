@@ -1,0 +1,7 @@
+const categoryActionTypes = {
+    GET_CATEGORIES__START: 'GET_CATEGORIES__START',
+    GET_CATEGORIES__SUCCESS: 'GET_CATEGORIES__SUCCESS',
+    GET_CATEGORIES__FAILURE: 'GET_CATEGORIES__FAILURE',
+}
+
+export default categoryActionTypes;
