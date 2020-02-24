@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ProductListingPage, ProductDetailsPage, CategoryListingPage, TempPage } from './pages';
+import { ProductListingPage, ProductDetailsPage, CategoryListingPage, TempPage, SearchResultsPage } from './pages';
 import './styles/main.scss';
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={TempPage} />
+          <Route path="/search" component={SearchResultsPage} />
           <Route path="/product/details/:productId" component={ProductDetailsPage} />
           <Route path="/:parentCategoryId/:categoryId" component={ProductListingPage} />
           <Route path="/:categoryId" component={CategoryListingPage} />

@@ -7,7 +7,7 @@ const NewArrival = ({ isNew }) => {
   const dispatch = useDispatch();
   const productsReducer = useSelector(state => state.productsReducer);
   const { selectedRefinements, selectedSortingOption } = productsReducer;
-  const isNewValue = selectedRefinements.isNew;
+  const isNewValue = selectedRefinements ? selectedRefinements.isNew : false;
 
   const applyRefinement = () => {
     dispatch(productActions.selectRefinement('isNew', isNewValue ? false : true, selectedRefinements, selectedSortingOption));

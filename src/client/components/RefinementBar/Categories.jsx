@@ -18,7 +18,7 @@ const Categories = ({ categories }) => {
             data-filter-value={value.value}
             onClick={(e) => applySingleRefinement(e, dispatch, selectedRefinements, 'categoryId', selectedSortingOption)}
           >
-            {value.value === selectedRefinements.categoryId ? <i className="fas fa-check-circle"></i> : <i className="far fa-circle"></i>}
+            {selectedRefinements && selectedRefinements.categoryId && value.value === selectedRefinements.categoryId ? <i className="fas fa-check-circle"></i> : <i className="far fa-circle"></i>}
             <span className="category-name">{value.label}</span>
             <ul className="refinement__values">{showCategories(value.values)}</ul>
           </li>
@@ -32,7 +32,7 @@ const Categories = ({ categories }) => {
           data-filter-value={value.value}
           onClick={(e) => applySingleRefinement(e, dispatch, selectedRefinements, 'categoryId')}
         >
-          {value.value === selectedRefinements.categoryId ? <i className="fas fa-check-circle"></i> : <i className="far fa-circle"></i>}
+          {selectedRefinements && selectedRefinements.categoryId && value.value === selectedRefinements.categoryId ? <i className="fas fa-check-circle"></i> : <i className="far fa-circle"></i>}
           <span className="category-name">{value.label}</span>
         </li>
       )

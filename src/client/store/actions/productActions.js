@@ -25,10 +25,10 @@ const productActions = {
         sizeValue,
     }),
 
-    getProductsStart: (selectedRefinements) => (
+    getProductsStart: (queryString) => (
         {
             type: productActionTypes.GET_PRODUCTS__START,
-            selectedRefinements,
+            queryString,
         }
     ),
 

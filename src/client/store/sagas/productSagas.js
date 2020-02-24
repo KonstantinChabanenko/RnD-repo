@@ -14,32 +14,38 @@ function* getProductByIdSaga(action) {
 }
 
 function* getProductsSaga(action) {
-    const { selectedRefinements, selectedSortingOption } = action;
+    const { selectedRefinements, selectedSortingOption, queryString } = action;
     const params = {};
 
-    Object.keys(selectedRefinements).forEach((key, index) => {
-        switch (key) {
-            case 'categoryId':
-                params[`refine_${index}`] = `cgid=${selectedRefinements[key]}`;
-                break;
-            case 'colors':
-                params[`refine_${index}`] = `c_refinementColor=${selectedRefinements[key].join('|')}`;
-                break;
-            case 'isNew':
-                if (selectedRefinements.isNew) {
-                    params[`refine_${index}`] = `c_isNew`;
-                }
-                break;
-            case 'sizes':
-                params[`refine_${index}`] = `c_size=${selectedRefinements[key].join('|')}`;
-                break;
-            case 'price':
-                params[`refine_${index}`] = `price=${selectedRefinements[key]}`;
-                break;
-            default:
-                return null;
-        }
-    });
+    if (queryString) {
+        params.q = queryString;
+    }
+
+    if (selectedRefinements) {
+        Object.keys(selectedRefinements).forEach((key, index) => {
+            switch (key) {
+                case 'categoryId':
+                    params[`refine_${index}`] = `cgid=${selectedRefinements[key]}`;
+                    break;
+                case 'colors':
+                    params[`refine_${index}`] = `c_refinementColor=${selectedRefinements[key].join('|')}`;
+                    break;
+                case 'isNew':
+                    if (selectedRefinements.isNew) {
+                        params[`refine_${index}`] = `c_isNew`;
+                    }
+                    break;
+                case 'sizes':
+                    params[`refine_${index}`] = `c_size=${selectedRefinements[key].join('|')}`;
+                    break;
+                case 'price':
+                    params[`refine_${index}`] = `price=${selectedRefinements[key]}`;
+                    break;
+                default:
+                    return null;
+            }
+        });
+    }
 
     if (selectedSortingOption) {
         params.sort = selectedSortingOption;

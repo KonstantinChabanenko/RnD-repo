@@ -1,14 +1,12 @@
 import React from "react";
 import {
   Navbar,
-  Form,
-  FormControl,
-  Button,
   Nav,
   Container,
 } from "react-bootstrap";
 import NavItem from './NavItem';
 import DropdownItem from './DropdownItem';
+import SearchField from './SearchField';
 
 const Header = ({ navCategories }) => {
   const showCategories = (categories) => {
@@ -70,10 +68,7 @@ const Header = ({ navCategories }) => {
       <Container>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">{showCategories(navCategories)}</Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-light">Search</Button>
-          </Form>
+          <SearchField />
         </Navbar.Collapse>
       </Container>
     </Navbar>

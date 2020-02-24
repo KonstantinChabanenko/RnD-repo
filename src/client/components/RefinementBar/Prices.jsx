@@ -20,7 +20,7 @@ const Prices = ({ prices }) => {
               data-filter-value={value.value}
               onClick={(e) => applySingleRefinement(e, dispatch, selectedRefinements, 'price', selectedSortingOption)}
             >
-              {selectedRefinements.price && (value.value === selectedRefinements.price) ? <i className="fas fa-check-circle"></i> : <i className="far fa-circle"></i>}
+              {selectedRefinements && selectedRefinements.price && (value.value === selectedRefinements.price) ? <i className="fas fa-check-circle"></i> : <i className="far fa-circle"></i>}
               <span className="price-range">{value.label}</span>
             </li>
           ))}

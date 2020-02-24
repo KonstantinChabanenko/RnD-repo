@@ -22,14 +22,14 @@ const Colors = ({ colors }) => {
                   data-filter-value={color.value}
                   onClick={(e) => {
                     if (!disabled) {
-                      applyRefinement(e, dispatch, selectedRefinements, "colors", selectedSortingOption)}
+                      applyRefinement(e, dispatch, selectedRefinements || {}, "colors", selectedSortingOption)}
                     }
                   }
                 >
                   <span
                     className={`value swatch-circle swatch-circle-${color.presentation_id}${disabled ? ' disabled' : ''}`}
                   ></span>
-                  {selectedRefinements.colors && selectedRefinements.colors.some(selectedColor => selectedColor === color.value) ? <span className="checked-mark"></span> : null}
+                  {selectedRefinements && selectedRefinements.colors && selectedRefinements.colors.some(selectedColor => selectedColor === color.value) ? <span className="checked-mark"></span> : null}
                 </div>
               </li>
             )

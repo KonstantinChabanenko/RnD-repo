@@ -19,7 +19,7 @@ const Sizes = ({ sizes }) => {
               className="value"
               data-filter-value={size.value}
               onClick={(e) => applyRefinement(e, dispatch, selectedRefinements, "sizes", selectedSortingOption)}>
-              {selectedRefinements.sizes && selectedRefinements.sizes.some(selectedSize => selectedSize === size.value) ? <i className="fas fa-check-square"></i> : <i className="far fa-square"></i>}
+              {selectedRefinements && selectedRefinements.sizes && selectedRefinements.sizes.some(selectedSize => selectedSize === size.value) ? <i className="fas fa-check-square"></i> : <i className="far fa-square"></i>}
               <span className="category-name">{size.label}</span>
             </li>
           ))}
