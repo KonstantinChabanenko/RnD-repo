@@ -44,8 +44,8 @@ const PageLayout = ({ children }) => {
   return isLoading ? <Loader /> : categories ? (
     <Fragment>
       <Header navCategories={categories} />
+      <PageBanner banner={getPageBanner(categories)} />
       <div role="main" id="maincontent">
-        <PageBanner banner={getPageBanner(categories)} />
         {children}
       </div>
     </Fragment>
