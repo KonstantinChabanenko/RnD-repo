@@ -8,6 +8,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import productActions from '../../store/actions/productActions';
 import PageLayout from '../../layouts/PageLayout';
+import PageBanner from '../../components/PageBanner';
 
 const ProductDetailsPage = () => {
   const { productId } = useParams();
@@ -25,6 +26,7 @@ const ProductDetailsPage = () => {
 
   return product ? (
     <PageLayout>
+      <PageBanner />
       <div className="product-details">
         <Container>
           <Row>

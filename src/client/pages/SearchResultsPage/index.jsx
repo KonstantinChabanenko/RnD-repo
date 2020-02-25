@@ -8,6 +8,7 @@ import Loader from '../../components/Loader';
 import GridHeader from '../../components/GridHeader';
 import PageLayout from '../../layouts/PageLayout';
 import productActions from '../../store/actions/productActions';
+import PageBanner from '../../components/PageBanner';
 
 const SearchResultsPage = () => {
   const location = useLocation();
@@ -25,6 +26,10 @@ const SearchResultsPage = () => {
 
   return products && refinements && sortingOptions ? (
     <PageLayout>
+      <PageBanner banner={{
+        imageSrc: "https://epamsystems06-alliance-prtnr-eu02-dw.demandware.net/on/demandware.static/-/Library-Sites-RefArchSharedLibrary/default/v87f8de315b390645d64642c15090f8e27bd098a0/images/SearchBanner/search.jpg?version=1,579,262,640,000",
+        title: "Search",
+      }} />
       <Container>
         <GridHeader />
         <Row>

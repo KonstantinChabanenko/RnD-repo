@@ -8,6 +8,7 @@ import Loader from '../../components/Loader';
 import GridHeader from '../../components/GridHeader';
 import PageLayout from '../../layouts/PageLayout';
 import productActions from '../../store/actions/productActions';
+import PageBanner from '../../components/PageBanner';
 
 const ProductListingPage = () => {
   const { categoryId } = useParams();
@@ -25,6 +26,7 @@ const ProductListingPage = () => {
 
   return products && refinements && sortingOptions ? (
     <PageLayout>
+      <PageBanner />
       <Container>
         <GridHeader />
         <Row>

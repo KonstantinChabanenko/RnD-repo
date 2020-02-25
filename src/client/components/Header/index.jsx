@@ -1,77 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Navbar,
   Nav,
   Container,
 } from "react-bootstrap";
-import NavItem from './NavItem';
-import DropdownItem from './DropdownItem';
 import SearchField from './SearchField';
+import Loader from '../Loader';
+import showCategories from '../../scripts/navigation/showCategories';
+import navBarCategoriesActions from '../../store/actions/navBarCategoriesActions';
 
-const Header = ({ navCategories }) => {
-  const showCategories = (categories) => {
-    const newarr = [];
-    categories.forEach(category => {
-      if (category.c_showInMenu) {
-        if (category.parent_category_id === "root") {
-          if (category.categories) {
-            newarr.push(
-              <NavItem
-                key={category.id}
-                linkTo={`/${category.id}`}
-                catName={category.name}
-              >
-                {showCategories(category.categories)}
-              </NavItem>
-            )
-          } else {
-            newarr.push(
-              <NavItem
-                key={category.id}
-                linkTo={`/${category.id}`}
-                catName={category.name}
-              />
-            )
-          }
-        } else {
-          if (category.categories) {
-            newarr.push(
-              <DropdownItem
-                key={category.id}
-                linkTo={`/${category.parent_category_id}/${category.id}`}
-                catName={category.name}
-              >
-                {showCategories(category.categories)}
-              </DropdownItem>
-            )
-          } else {
-            newarr.push(
-              <DropdownItem
-                key={category.id}
-                linkTo={`/${category.parent_category_id}/${category.id}`}
-                catName={category.name}
-              />
-            )
-          }
-        }
-      }
-    })
+const Header = () => {
+  const dispatch = useDispatch();
+  const navBarCategoriesReducer = useSelector(state => state.navBarCategoriesReducer);
+  const { categories, isLoading } = navBarCategoriesReducer;
 
-    if (newarr.length > 0) {
-      return newarr;
-    }
-  }
+  useEffect(() => {
+    dispatch(navBarCategoriesActions.getCategoriesStart());
+  }, [dispatch]);
 
-  return (
+  return isLoading ? <Loader /> : categories ? (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Container>
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">{showCategories(navCategories)}</Nav>
+          <Nav className="mr-auto">{showCategories(categories)}</Nav>
           <SearchField />
         </Navbar.Collapse>
       </Container>
     </Navbar>
+  ) : (
+    <div>Categories were not found</div>
   )
 };
 
