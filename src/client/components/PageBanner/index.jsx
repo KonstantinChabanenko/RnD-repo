@@ -15,7 +15,7 @@ const PageBanner = ({ banner }) => {
             categories.forEach((category) => {
                 if (category.id === categoryId) {
                     pageBanner = {
-                        imageSrc: category.c_slotBannerImage,
+                        imageSrc: category.c_slotBannerImage || category.image,
                         title: category.name,
                     }
                     throw BreakException;

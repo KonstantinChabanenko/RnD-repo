@@ -1,0 +1,16 @@
+.homepage {
+    .page-banner {
+        &::after {
+            display: none;
+        }
+    }
+
+    .men {
+        background-image: url('https://epamsystems06-alliance-prtnr-eu02-dw.demandware.net/on/demandware.static/-/Library-Sites-RefArchSharedLibrary/default/dwb0e4dbf4/images/homepage/homepage-3/large.jpg');
+        background-position: center;
+    }
+
+    .category-tile {
+        padding: rem-calc(1);
+    }
+}
