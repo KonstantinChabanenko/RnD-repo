@@ -16,6 +16,11 @@
 
     &__attributes {
         padding-left: rem-calc(40);
+
+        select option:disabled {
+            color: inherit;
+            background-color: rgba(0, 0, 0, .1);
+        }
     }
 
     &__promotions {
