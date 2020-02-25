@@ -39,7 +39,7 @@ const PageBanner = ({ banner }) => {
             className="page-banner position-relative"
             style={{ backgroundImage: `url(${banner ? banner.imageSrc : getPageBanner(categories).imageSrc})` }}
         >
-            <h1 className="page-banner__title position-absolute m-0">{banner ? banner.title : getPageBanner(categories).title}</h1>
+            <h1 className="page-banner__title position-absolute m-0">{banner ? banner.title : pageBanner.title}</h1>
         </div>
     ) : null
 }
