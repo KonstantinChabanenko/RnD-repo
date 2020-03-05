@@ -60,5 +60,14 @@ module.exports = (fastify, opts, done) => {
     });
   });
 
+  fastify.get("/product", (request, reply) => {
+    let queryString = queryStringBuilder(request.query);
+    req(apiGetOptions('/Product-ShowJSON', queryString), function(error, response) {
+      if (error) throw new Error(error);
+      reply.code(response.statusCode).send(response.body);
+      return response;
+    });
+  });
+
   done();
 };
