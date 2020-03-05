@@ -13,6 +13,18 @@ export const apiGetOptions = (url, query) => {
     }
   };
 };
+export const apiSBGetOptions = (url, query) => {
+  return {
+    method: "GET",
+    url: config.url_sb + url + (query ? "?" + query : ""),
+    json: true,
+    headers: {
+      "Content-Type": "application/json",
+      "x-dw-client-id": config.client_id,
+      Authorization: "Bearer " + token.get()
+    }
+  };
+};
 export const apiPostOptions = (url, query, body) => {
   return {
       method: "POST",

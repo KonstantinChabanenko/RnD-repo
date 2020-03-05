@@ -2,7 +2,7 @@ const config = require("../../config");
 const req = require("request");
 const axios = require("axios");
 const token = require("../../config/auth");
-const {apiGetOptions, queryStringBuilder} = require('../../helpers/api/apiHelper');
+const {apiGetOptions, apiSBGetOptions, queryStringBuilder} = require('../../helpers/api/apiHelper');
 const {
   getProductDetails,
   getProductListPrice,
@@ -62,7 +62,7 @@ module.exports = (fastify, opts, done) => {
 
   fastify.get("/product", (request, reply) => {
     let queryString = queryStringBuilder(request.query);
-    req(apiGetOptions('/Product-ShowJSON', queryString), function(error, response) {
+    req(apiSBGetOptions('/Product-ShowJSON', queryString), function(error, response) {
       if (error) throw new Error(error);
       reply.code(response.statusCode).send(response.body);
       return response;
