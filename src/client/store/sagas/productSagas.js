@@ -1,14 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import productActionTypes from '../actionTypes/productActionTypes';
-import { getProductDetails, getProducts } from '../../services/productAPI';
+import { getProductDetailsV2, getProducts } from '../../services/productAPI';
 
 function* getProductByIdSaga(action) {
     try {
-        const currentProduct = yield call(getProductDetails, action.productId);
+        const currentProduct = yield call(getProductDetailsV2, action.params);
         yield put({ type: productActionTypes.GET_PRODUCT_BY_ID__SUCCESS, currentProduct });
     }
 
     catch (error) {
+        console.log(error);
         yield put({ type: productActionTypes.GET_PRODUCT_BY_ID__FAILURE });
     }
 }

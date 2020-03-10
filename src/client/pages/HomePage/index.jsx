@@ -1,12 +1,12 @@
 import React from 'react';
 import PageLayout from '../../layouts/PageLayout';
-import PageBanner from '../../components/PageBanner';
-import { Container, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+// import PageBanner from '../../components/PageBanner';
+// import { Container, Row, Col } from 'react-bootstrap';
+// import { Link } from 'react-router-dom';
 
 const HomePage = () => (
   <PageLayout>
-    <div className="homepage">
+    {/* <div className="homepage">
       <PageBanner banner={{
         imageSrc: "https://epamsystems06-alliance-prtnr-eu02-dw.demandware.net/on/demandware.static/-/Library-Sites-RefArchSharedLibrary/default/dwf81035ba/images/homepage/homepage-4/large.jpg",
         title: "Summer Style"
@@ -54,7 +54,7 @@ const HomePage = () => (
           </Row>
         </div>
       </Container>
-    </div>
+    </div> */}
   </PageLayout>
 )
 
