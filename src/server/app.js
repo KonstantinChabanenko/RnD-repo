@@ -15,6 +15,7 @@ fastify.register(require('./routes/product_search'), { prefix: '/' });
 fastify.register(require('./routes/product_tile'), { prefix: '/' });
 fastify.register(require('./routes/categories'), { prefix: '/' });
 fastify.register(require('./routes/search'), { prefix: '/' });
+fastify.register(require('./routes/baskets'), { prefix: '/' });
 
 const start = async () => {
   try {
