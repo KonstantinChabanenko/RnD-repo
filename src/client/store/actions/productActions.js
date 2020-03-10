@@ -5,6 +5,11 @@ const productActions = {
         type: productActionTypes.GET_PRODUCT_BY_ID__START,
         productId,
     }),
+
+    getProductByIdStartV2: params => ({
+        type: productActionTypes.GET_PRODUCT_BY_ID__START,
+        params,
+    }),
       
     getProductByIdSuccess: (product) => ({
         type: productActionTypes.GET_PRODUCT_BY_ID__SUCCESS,

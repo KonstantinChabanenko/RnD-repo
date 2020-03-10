@@ -1,3 +1,5 @@
+import productActions from '../../store/actions/productActions';
+
 export const applyAttribute = (productObj, productAttrKey, attrKey1, attrKey2, attrValue) => {
     productObj.variants.forEach(variant => {
         const productAttr = productObj[productAttrKey].values.find(value => value.value === variant[attrKey2]);
@@ -26,4 +28,15 @@ export const setSelectedVariant = (product) => {
         currency: selectedVariant.currency,
         product_type: 'variation',
     }
+}
+
+export const setProductAttribute = (url, dispatch) => {
+    let params = {};
+    const keyPairs = url.split('?')[1].split('&');
+    keyPairs.forEach(entry => {
+        const items = entry.split('=');
+        params[items[0]] = items[1];
+    });
+
+    dispatch(productActions.getProductByIdStartV2(params));
 }

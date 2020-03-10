@@ -4,7 +4,7 @@ import { getProductDetailsV2, getProducts } from '../../services/productAPI';
 
 function* getProductByIdSaga(action) {
     try {
-        const currentProduct = yield call(getProductDetailsV2, action.productId);
+        const currentProduct = yield call(getProductDetailsV2, action.params);
         yield put({ type: productActionTypes.GET_PRODUCT_BY_ID__SUCCESS, currentProduct });
     }
 
