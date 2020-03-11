@@ -9,7 +9,7 @@ module.exports = (fastify, opts, done) => {
   fastify.get("/product_search", (request, reply) => {
     let queryString = queryStringBuilder(request.query);
 
-    req(apiGetOptions("/product_search", queryString), function(
+    req(apiGetOptions("/product_search", queryString, request.headers.authorization), function(
       error,
       response
     ) {

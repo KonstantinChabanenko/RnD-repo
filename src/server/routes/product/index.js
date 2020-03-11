@@ -16,11 +16,11 @@ module.exports = (fastify, opts, done) => {
 ////////////////////////////////////////////////////////////////
   fastify.get("/product/details/:product_id", async (request, reply) => {
 
-    await axios.post("http://127.0.0.1:8000/customers/auth", { type: "guest" });
     const product_result = await axios(
       apiGetOptions(
         `/products/${request.params.product_id}`,
-        "expand=variations,images,prices,promotions"
+        "expand=variations,images,prices,promotions",
+        request.headers.authorization
       )
     );
 
@@ -31,7 +31,7 @@ module.exports = (fastify, opts, done) => {
       apiGetOptions(
         `/promotions/(${detailedProduct.product_promotions
           .map(promotion => promotion.promotion_id)
-          .toString()})`
+          .toString()})`, '', request.headers.authorization
       )
     );
     detailedProduct.product_promotions = promotions.data.data;
@@ -53,7 +53,7 @@ module.exports = (fastify, opts, done) => {
 ////////////////////////////////////////////////////////////////
   fastify.get("/products/:params", (request, reply) => {
     let queryString = queryStringBuilder(request.query);
-    req(apiGetOptions('/products/' + request.params.params, queryString), function(error, response) {
+    req(apiGetOptions('/products/' + request.params.params, queryString, request.headers.authorization), function(error, response) {
       if (error) throw new Error(error);
       reply.code(response.statusCode).send(response.body);
       return response;

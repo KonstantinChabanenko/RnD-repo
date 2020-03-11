@@ -14,7 +14,8 @@ module.exports = (fastify, opts, done) => {
     const productSearch_result = await axios(
       apiGetOptions(
         "/product_search",
-        "count=24&" + `${queryString}`
+        "count=24&" + `${queryString}`,
+        request.headers.authorization
       )
     );
 
@@ -25,14 +26,12 @@ module.exports = (fastify, opts, done) => {
     const masterProductIds = productSearchHits
       .map(hit => hit.product_id)
       .toString();
-        if(!token.get()){
-          await axios.post("http://127.0.0.1:8000/customers/auth", { type: "guest" });
-        }
 
     const products_result = await axios(
       apiGetOptions(
         `/products/(${masterProductIds})`,
-        "expand=variations,images,prices"
+        "expand=variations,images,prices",
+        request.headers.authorization
       )
     );
 
