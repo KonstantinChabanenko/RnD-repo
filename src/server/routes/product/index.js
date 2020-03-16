@@ -15,7 +15,7 @@ module.exports = (fastify, opts, done) => {
 // #ROUTE: GET:/product/details/:product_id /////////////////////
 ////////////////////////////////////////////////////////////////
   fastify.get("/product/details/:product_id", async (request, reply) => {
-
+    try{
     const product_result = await axios(
       apiGetOptions(
         `/products/${request.params.product_id}`,
@@ -45,6 +45,10 @@ module.exports = (fastify, opts, done) => {
         break;
     }
     reply.code(200).send(detailedProduct);
+  }
+  catch (err) {
+    reply.code(400).send(err.response.data);
+  }
   });
 
 
