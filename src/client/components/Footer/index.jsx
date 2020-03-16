@@ -1,9 +1,9 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+// import { Container, Row, Col } from 'react-bootstrap';
 
 const Footer = () => (
     <div className="footer mt-3">
-        <Container>
+        {/* <Container>
             <div className="footer__content py-5">
                 <Row>
                     <Col xs={3}>
@@ -62,7 +62,7 @@ const Footer = () => (
                     </Col>
                 </Row>
             </div>
-        </Container>
+        </Container> */}
     </div>
 )
 

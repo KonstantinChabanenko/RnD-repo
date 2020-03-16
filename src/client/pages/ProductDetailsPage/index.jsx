@@ -8,6 +8,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import productActions from '../../store/actions/productActions';
 import PageLayout from '../../layouts/PageLayout';
+import { Link } from 'react-router-dom';
 
 const ProductDetailsPage = () => {
   const { productId } = useParams();
@@ -36,6 +37,7 @@ const ProductDetailsPage = () => {
             </Col>
           </Row>
           <DescriptionAndDetails />
+          <Link to="/cart">Cart</Link>
         </Container>
       </div>
     </PageLayout>

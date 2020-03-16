@@ -1,0 +1,7 @@
+const basketActionTypes = {
+    CREATE_BASKET__START: "CREATE_BASKET__START",
+    CREATE_BASKET__SUCCESS: "CREATE_BASKET__SUCCESS",
+    CREATE_BASKET__FAILURE: "CREATE_BASKET__FAILURE",
+}
+
+export default basketActionTypes;

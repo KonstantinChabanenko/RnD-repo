@@ -28,3 +28,25 @@ export const get = (path, params, token) => {
         }
     ).then(res => res.data).catch(err => err)
 };
+
+export const post = (path, data) => axios.post(
+    `${root}/${path}`,
+    data,
+    {
+        headers: {
+            "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "Authorization": auth_token,
+        },
+    }
+);
+
+export const Delete = (path, params) => axios.delete(
+    `${root}/${path}`,
+    {
+        headers: {
+            "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "Authorization": auth_token,
+        },
+        params,
+    }
+);
