@@ -3,19 +3,40 @@ import axios from 'axios';
 
 const { root } = api;
 
-export const get_auth_token = axios.post(
+let authToken = null;
+
+const authTokenRequestPost = (type) => axios.post(
     `${root}/customers/auth`,
     {
-        type: "guest",
+        type,
     },
 ).then(res => res.data.authorization);
 
-export const get = (path, params) => axios.get(
-    `${root}/${path}`,
-    {
-        headers: {
-            "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        },
-        params,
+const requestConfigGet = (url, params) => ({
+    method: 'get',
+    url,
+    headers: {
+        "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        Authorization: authToken,
+    },
+    params,
+})
+
+export const get = async (path, params) => {
+    if (!authToken) {
+        authToken = authTokenRequestPost("guest");
     }
-).then(res => res.data).catch(err => err);
+
+    let res = await axios.request(requestConfigGet(`${root}/${path}`, params))
+        .then(res => res.data)
+        .catch(err => err);
+
+    if (res.fault && res.fault.type === "ExpiredTokenException") {
+        authToken = authTokenRequestPost("refresh");
+        res = axios.request(requestConfigGet(`${root}/${path}`, params))
+            .then(res => res.data)
+            .catch(err => err);
+    }
+
+    return res;
+}
