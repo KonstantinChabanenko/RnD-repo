@@ -2,51 +2,72 @@ import api from '../config/api';
 import axios from 'axios';
 
 const { root } = api;
+let authToken = null;
 
-export const get_auth_token = () => axios.post(
+const authTokenRequestPost = (type) => axios.post(
     `${root}/customers/auth`,
     {
-        type: "guest",
+        type,
     },
 ).then(res => res.data.authorization);
 
-let auth_token;
+const checkAuthTokenExpiration = (res) => {
+    if (res.fault && res.fault.type === "ExpiredTokenException") {
+        authToken = authTokenRequestPost("refresh");
+        return true;
+    } else {
+        return false;
+    }
+}
 
-export const get = (path, params, token) => {
-    if (token) {
-        auth_token = token;
+const requestGet = (path, params) => axios.get(
+    `${root}/${path}`,
+    {
+        headers: {
+            "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            Authorization: authToken,
+        },
+        params,
+    }
+).then(res => res.data).catch(err => err.response.data);
+
+export const get = async (path, params) => {
+    if (!authToken) {
+        authToken = await authTokenRequestPost("guest");
     }
 
-    return axios.get(
-        `${root}/${path}`,
-        {
-            headers: {
-                "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "Authorization": auth_token,
-            },
-            params,
-        }
-    ).then(res => res.data).catch(err => err)
-};
+    let res = await requestGet(path, params);
+    const authTokenHasExpired = checkAuthTokenExpiration(res);
 
-export const post = (path, data) => axios.post(
+    if (authTokenHasExpired) {
+        res = requestGet(path, params);
+    }
+
+    return res;
+}
+
+const requestPost = (path, data) => axios.post(
     `${root}/${path}`,
     data,
     {
         headers: {
             "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "Authorization": auth_token,
-        },
+            Authorization: authToken,
+        }
     }
-);
+).then(res => res.data).catch(err => err);
 
-export const Delete = (path, params) => axios.delete(
-    `${root}/${path}`,
-    {
-        headers: {
-            "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "Authorization": auth_token,
-        },
-        params,
+export const post = async (path, data) => {
+    if (!authToken) {
+        authToken = await authTokenRequestPost("guest");
     }
-);
+
+    let res = await requestPost(path, data);
+    const authTokenHasExpired = checkAuthTokenExpiration(res);
+
+    if (authTokenHasExpired) {
+        res = requestPost(path, data);
+    }
+
+    return res;
+}

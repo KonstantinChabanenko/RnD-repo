@@ -9,6 +9,7 @@ const {
 
 module.exports = (fastify, opts, done) => {
   fastify.get("/producttiles", async (request, reply) => {
+    try {
     let queryString = queryStringBuilder(request.query);
 
     const productSearch_result = await axios(
@@ -40,6 +41,10 @@ module.exports = (fastify, opts, done) => {
     const detailedProducts = getDetailedProducts(readyProducts)
 
     reply.code(200).send({ products: detailedProducts, refinements, sortingOptions });
+    }
+    catch (err) {
+      reply.code(400).send(err.response.data);
+    }
   });
   done();
 };

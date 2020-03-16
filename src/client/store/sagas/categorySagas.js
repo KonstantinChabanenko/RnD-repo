@@ -1,7 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import categoryActionTypes from '../actionTypes/categoryActionTypes';
 import { getCategories } from '../../services/categoryAPI';
-import { get_auth_token } from '../../services/http';
 import categoryActions from '../actions/categoryActions';
 import navBarCategoriesActionTypes from '../actionTypes/navBarCategoriesActionTypes';
 import navBarCategoriesActions from '../actions/navBarCategoriesActions';
@@ -19,8 +18,7 @@ function* getCategoriesSaga(action) {
 
 function* getNavBarCategoriesSaga() {
     try {
-        const token = yield call(get_auth_token);
-        const categories = yield call(getCategories, "root", { levels: 5 }, token);
+        const categories = yield call(getCategories, "root", { levels: 5 });
         yield put(navBarCategoriesActions.getCategoriesSuccess(categories));
     }
 

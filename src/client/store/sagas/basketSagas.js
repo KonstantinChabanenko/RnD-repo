@@ -6,7 +6,7 @@ import basketActionTypes from '../actionTypes/basketActionTypes';
 function* createBasketSaga(action) {
     try {
         const basket = yield call(createBasket, action.data);
-        yield put(basketActions.createBasketSuccess(basket.data));
+        yield put(basketActions.createBasketSuccess(basket));
     } catch (error) {
         console.log(error);
         yield put(basketActions.createBasketFailure());

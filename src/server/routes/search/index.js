@@ -6,7 +6,7 @@ module.exports = (fastify, opts, done) => {
     let queryString = queryStringBuilder(request.query);
 
     req(apiGetOptions('/product_search', queryString, request.headers.authorization), function(error, response) {
-      if (error) throw new Error(error);
+      if (error) {reply.code(response.statusCode).send(error.response.body);}
       reply.code(response.statusCode).send(response.body);
       return response;
     })
