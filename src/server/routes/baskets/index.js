@@ -33,7 +33,8 @@ module.exports = (fastify, opts, done) => {
     axios(
       apiGetOptions(
         `/baskets/` + request.params.basket_id,
-        ""
+        "",
+        request.headers.authorization
       )
     )
       .then(response => reply.code(200).send(response.data))
