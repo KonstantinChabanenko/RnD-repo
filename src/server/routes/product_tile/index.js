@@ -15,8 +15,7 @@ module.exports = (fastify, opts, done) => {
     const productSearch_result = await axios(
       apiGetOptions(
         "/product_search",
-        "count=24&" + `${queryString}`,
-        request.headers.authorization
+        "count=24&" + `${queryString}`
       )
     );
 
@@ -31,8 +30,7 @@ module.exports = (fastify, opts, done) => {
     const products_result = await axios(
       apiGetOptions(
         `/products/(${masterProductIds})`,
-        "expand=variations,images,prices",
-        request.headers.authorization
+        "expand=variations,images,prices"
       )
     );
 
