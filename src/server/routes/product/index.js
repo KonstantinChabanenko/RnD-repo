@@ -19,8 +19,7 @@ module.exports = (fastify, opts, done) => {
     const product_result = await axios(
       apiGetOptions(
         `/products/${request.params.product_id}`,
-        "expand=variations,images,prices,promotions",
-        request.headers.authorization
+        "expand=variations,images,prices,promotions"
       )
     );
 
@@ -31,7 +30,7 @@ module.exports = (fastify, opts, done) => {
       apiGetOptions(
         `/promotions/(${detailedProduct.product_promotions
           .map(promotion => promotion.promotion_id)
-          .toString()})`, '', request.headers.authorization
+          .toString()})`, ''
       )
     );
     detailedProduct.product_promotions = promotions.data.data;
@@ -57,7 +56,7 @@ module.exports = (fastify, opts, done) => {
 ////////////////////////////////////////////////////////////////
   fastify.get("/products/:params", (request, reply) => {
     let queryString = queryStringBuilder(request.query);
-    req(apiGetOptions('/products/' + request.params.params, queryString, request.headers.authorization), function(error, response) {
+    req(apiGetOptions('/products/' + request.params.params), function(error, response) {
       if (error) throw new Error(error);
       reply.code(response.statusCode).send(response.body);
       return response;

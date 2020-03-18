@@ -2,16 +2,28 @@ const config = require("../../config");
 const axios = require("axios");
 
 export const apiGetOptions = (url, query, userToken) => {
-  return {
-    method: "GET",
-    url: config.url + url + (query ? "?" + query : ""),
-    json: true,
-    headers: {
-      "Content-Type": "application/json",
-      "x-dw-client-id": config.client_id,
-      Authorization: userToken
-    }
-  };
+  if (userToken){
+    return {
+      method: "GET",
+      url: config.url + url + (query ? "?" + query : ""),
+      json: true,
+      headers: {
+        "Content-Type": "application/json",
+        "x-dw-client-id": config.client_id,
+        Authorization: userToken
+      }
+    };
+  } else {
+    return {
+      method: "GET",
+      url: config.url + url + (query ? "?" + query : ""),
+      json: true,
+      headers: {
+        "Content-Type": "application/json",
+        "x-dw-client-id": config.client_id,
+      }
+    };
+  }
 };
 
 export const apiDeleteOptions = (url, query, userToken) => {

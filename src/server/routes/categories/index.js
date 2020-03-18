@@ -9,7 +9,7 @@ module.exports = (fastify, opts, done) => {
     let queryString = queryStringBuilder(request.query);
 
     const result = await axios(
-      apiGetOptions("/categories/" + request.params.category, queryString, request.headers.authorization)
+      apiGetOptions("/categories/" + request.params.category, queryString)
     );
     reply.code(result.status).send(result.data.categories);
   }
