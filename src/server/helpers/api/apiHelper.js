@@ -59,7 +59,7 @@ export const apiPostMethod = (url, query, body, userToken) => {
     JSON.stringify(body),
     {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": body ? "application/json" : '',
         "x-dw-client-id": config.client_id,
         Authorization: userToken,
       }
