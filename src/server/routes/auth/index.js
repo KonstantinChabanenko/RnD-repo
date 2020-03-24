@@ -1,29 +1,45 @@
 const token = require("../../config/auth");
-const { apiPostOptions, apiPostMethod } = require("../../helpers/api/apiHelper");
+const {
+  apiPostOptions,
+  apiPostMethod
+} = require("../../helpers/api/apiHelper");
 const req = require("request");
 
 module.exports = (fastify, opts, done) => {
-  fastify.post("/customers/auth", (request, reply) => {
-    req(apiPostOptions("/customers/auth", null, request.body), function(
-      error,
-      response
-    ) {
-      if (error) throw new Error(error);
-      token.set(response.headers.authorization.split(" ")[1]);
-      reply.code(200).send(response.headers);
-      return response;
-    });
+  /////////////////////////////////////////////////////////////////
+  // #ROUTE: POST:/customers/auth /////////////////////
+  ////////////////////////////////////////////////////////////////
+  fastify.post("/customers/auth/guest", async (request, reply) => {
+    apiPostMethod(`/customers/auth`, "", { type: "guest" })
+      .then(response => {
+        reply.setCookie("token", response.headers.authorization, {
+          domain: "127.0.0.1",
+          path: "/"
+        });
+        reply.code(200).send(response.data);
+      })
+      .catch(err => reply.code(err.response.status).send(err.response.data));
   });
 
-  fastify.post("/sessions", (request, reply) => {
+  /////////////////////////////////////////////////////////////////
+  // #ROUTE: POST:/customer/refresh /////////////////////
+  ////////////////////////////////////////////////////////////////
+  fastify.post("/customers/auth/refresh", (request, reply) => {
     apiPostMethod(
-      `/sessions`,
+      `/customers/auth`,
       "",
-      '',
-      request.headers.authorization
+      { type: "refresh" },
+      request.cookies.token
     )
-      .then(response => reply.code(200).send(response.headers['set-cookie']))
-      .catch(err => reply.code(500).send(err.response));
+      .then(response => {
+        reply.setCookie("token", response.headers.authorization, {
+          domain: "127.0.0.1",
+          path: "/"
+        });
+        reply.code(200).send(response.data);
+      })
+      .catch(err => reply.code(err.response.status).send(err.response.data));
   });
+
   done();
 };
