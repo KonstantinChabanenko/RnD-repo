@@ -4,8 +4,9 @@ import basketActions from '../actions/basketActions';
 import basketActionTypes from '../actionTypes/basketActionTypes';
 
 function* createBasketSaga(action) {
+    const { data, authToken } = action;
     try {
-        const basket = yield call(createBasket, action.data);
+        const basket = yield call(createBasket, data, authToken);
         yield put(basketActions.createBasketSuccess(basket));
     } catch (error) {
         console.log(error);

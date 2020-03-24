@@ -13,7 +13,7 @@ module.exports = (fastify, opts, done) => {
     apiPostMethod(`/customers/auth`, "", { type: "guest" })
       .then(response => {
         reply.setCookie("token", response.headers.authorization, {
-          domain: "127.0.0.1",
+          domain: "localhost",
           path: "/"
         });
         reply.code(200).send(response.data);

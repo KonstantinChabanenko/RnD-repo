@@ -2,11 +2,14 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import basketActions from '../../../store/actions/basketActions';
+import { useCookies } from 'react-cookie';
 
 const AddProductBtn = ({ disabled }) => {
   const dispatch = useDispatch();
+  const [cookies] = useCookies(['token']);
   const addProductFn = () => {
-    dispatch(basketActions.createBasketStart({}));
+    console.log(cookies.token);
+    dispatch(basketActions.createBasketStart({}, cookies.token));
   }
 
   return (
