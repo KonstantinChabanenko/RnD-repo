@@ -1,3 +1,3 @@
-import { requestPost } from './http';
+import { post } from './http';
 
-export const createBasket = (data) => requestPost('baskets', data);
+export const createBasket = (data) => post('baskets', data);

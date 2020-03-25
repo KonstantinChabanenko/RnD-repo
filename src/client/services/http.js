@@ -3,11 +3,11 @@ import axios from 'axios';
 
 const { root } = api;
 
-const getAuthToken = () => requestPost(
+export const getAuthToken = () => requestPost(
     `customers/auth/guest`
 );
 
-export const requestPost = (path, data) => axios.post(
+export const requestPost = (path, data, token) => axios.post(
     `${root}/${path}`,
     data,
     {
@@ -29,3 +29,7 @@ export const get = (path, params) => axios.get(
     }
 ).then(res => res.data).catch(err => err.response.data);
 
+export const post = async (path, data) => {
+  let token = await getAuthToken();
+  return requestPost('baskets', data, token);
+}
