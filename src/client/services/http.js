@@ -3,17 +3,17 @@ import axios from 'axios';
 
 const { root } = api;
 
-const getAuthToken = () => axios.post(
-    `${root}/customers/auth/guest`,
+const getAuthToken = () => requestPost(
+    `customers/auth/guest`
 );
 
-const requestPost = (path, data, authToken) => axios.post(
+const requestPost = (path, data) => axios.post(
     `${root}/${path}`,
     data,
     {
+      withCredentials: true, 
         headers: {
             "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            Authorization: authToken,
         }
     }
 ).then(res => res.data).catch(err => err.response.data);
@@ -21,6 +21,7 @@ const requestPost = (path, data, authToken) => axios.post(
 export const get = (path, params) => axios.get(
     `${root}/${path}`,
     {
+      withCredentials: true,
         headers: {
             "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         },
@@ -28,9 +29,3 @@ export const get = (path, params) => axios.get(
     }
 ).then(res => res.data).catch(err => err.response.data);
 
-export const post = async (path, data, authToken) => {
-    if (!authToken) {
-        const newAuthToken = await getAuthToken();
-        return requestPost(path, data, newAuthToken);
-    }
-}

@@ -15,6 +15,8 @@ module.exports = (fastify, opts, done) => {
   // #ROUTE: POST:/baskets /////////////////////
   ////////////////////////////////////////////////////////////////
   fastify.post("/baskets", (request, reply) => {
+    console.log('BASKETS');
+    console.log(request.cookies);
       apiPostMethod(
         '/baskets',
         "",
