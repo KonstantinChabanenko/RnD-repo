@@ -7,7 +7,7 @@ const getAuthToken = () => requestPost(
     `customers/auth/guest`
 );
 
-const requestPost = (path, data) => axios.post(
+export const requestPost = (path, data) => axios.post(
     `${root}/${path}`,
     data,
     {
