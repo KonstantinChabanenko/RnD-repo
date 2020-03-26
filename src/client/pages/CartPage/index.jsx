@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import Products from '../../components/CartPage/Products';
 
