@@ -3,6 +3,7 @@ import ProductDetailsPage from './ProductDetailsPage';
 import CategoryListingPage from './CategoryListingPage';
 import HomePage from './HomePage';
 import SearchResultsPage from './SearchResultsPage';
+import CartPage from './CartPage';
 
 export {
     ProductListingPage,
@@ -10,4 +11,5 @@ export {
     CategoryListingPage,
     HomePage,
     SearchResultsPage,
+    CartPage
 }

@@ -3,40 +3,52 @@ import axios from 'axios';
 
 const { root } = api;
 
-let authToken = null;
-
-const authTokenRequestPost = (type) => axios.post(
-    `${root}/customers/auth`,
+const requestPost = (path, data) => axios.post(
+    `${root}/${path}`,
+    data,
     {
-        type,
-    },
-).then(res => res.data.authorization);
-
-const requestConfigGet = (url, params) => ({
-    method: 'get',
-    url,
-    headers: {
-        "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        Authorization: authToken,
-    },
-    params,
-})
-
-export const get = async (path, params) => {
-    if (!authToken) {
-        authToken = authTokenRequestPost("guest");
+      withCredentials: true, 
+      headers: {
+          "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      }
     }
+).then(res => res.data).catch(err => err.response.data);
 
-    let res = await axios.request(requestConfigGet(`${root}/${path}`, params))
-        .then(res => res.data)
-        .catch(err => err);
+const getAuthToken = () => requestPost(`customers/auth/guest`);
 
-    if (res.fault && res.fault.type === "ExpiredTokenException") {
-        authToken = authTokenRequestPost("refresh");
-        res = axios.request(requestConfigGet(`${root}/${path}`, params))
-            .then(res => res.data)
-            .catch(err => err);
+const refreshAuthToken = () => requestPost(`customers/auth/refresh`);
+
+export const get = (path, params) => axios.get(
+    `${root}/${path}`,
+    {
+      withCredentials: true,
+        headers: {
+            "x-dw-client-id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        },
+        params,
     }
+).then(res => res.data).catch(err => err.response.data);
 
-    return res;
+export const post = async (path, data) => {
+  let res = await requestPost(path, data);
+
+  if (res.fault) {
+    switch (res.fault.type) {
+      case "ExpiredTokenException":
+        await refreshAuthToken();
+        res = await requestPost(path, data);
+        if (res.fault && res.fault.type === "ExpiredTokenException") {
+          await getAuthToken();
+          return requestPost(path, data);
+        }
+        return res;
+      case "AuthorizationHeaderMissingException":
+        await getAuthToken();
+        return requestPost(path, data);
+      default:
+        return res;
+    }
+  }
+
+  return res;
 }

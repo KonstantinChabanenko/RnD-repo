@@ -1,7 +1,6 @@
 const config = require("../../config");
 const req = require("request");
 const axios = require("axios");
-const token = require("../../config/auth");
 const {
   apiGetOptions,
   queryStringBuilder,
@@ -15,15 +14,17 @@ module.exports = (fastify, opts, done) => {
   /////////////////////////////////////////////////////////////////
   // #ROUTE: POST:/baskets /////////////////////
   ////////////////////////////////////////////////////////////////
-  fastify.post("/baskets", async (request, reply) => {
-    try {
-      const basket = await axios(
-        apiPostOptions(`/baskets`, "", {}, request.headers.authorization)
-      );
-      reply.code(200).send(basket.data);
-    } catch (error) {
-      reply.code(400).send(error.response.data);
-    }
+  fastify.post("/baskets", (request, reply) => {
+    console.log('BASKETS');
+    console.log(request.cookies);
+      apiPostMethod(
+        '/baskets',
+        "",
+        null,
+        request.cookies.token
+        )
+      .then(response => reply.code(200).send(response.data))
+      .catch(error => reply.code(error.response.status).send(error.response.data));
   });
 
   ////////////////////////////////////////////////////////////////
@@ -34,7 +35,7 @@ module.exports = (fastify, opts, done) => {
       apiGetOptions(
         `/baskets/` + request.params.basket_id,
         "",
-        request.headers.authorization
+        request.cookies.token
       )
     )
       .then(response => reply.code(200).send(response.data))
@@ -49,7 +50,7 @@ module.exports = (fastify, opts, done) => {
       apiDeleteOptions(
         `/baskets/` + request.params.basket_id,
         "",
-        request.headers.authorization
+        request.cookies.token
       )
     )
       .then(response => reply.code(204).send())
@@ -64,7 +65,7 @@ module.exports = (fastify, opts, done) => {
       `/baskets/${request.params.basket_id}/items`,
       "",
       request.body,
-      request.headers.authorization
+      request.cookies.token
     )
       .then(response => reply.code(200).send(response.data))
       .catch(err => reply.code(500).send(err.response.data));
@@ -78,7 +79,7 @@ module.exports = (fastify, opts, done) => {
       `/baskets/${request.params.basket_id}/items/${request.params.item_id}`,
       "",
       request.body,
-      request.headers.authorization
+      request.cookies.token
     )
       .then(response => reply.code(200).send(response.data))
       .catch(err => reply.code(500).send(err.response.data));
@@ -92,7 +93,7 @@ module.exports = (fastify, opts, done) => {
       apiDeleteOptions(
         `/baskets/${request.params.basket_id}/items/${request.params.item_id}`,
         "",
-        request.headers.authorization
+        request.cookies.token
       )
     )
       .then(response => reply.code(204).send(response.data))

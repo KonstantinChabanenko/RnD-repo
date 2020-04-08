@@ -47,24 +47,37 @@ export const apiPostOptions = (url, query, body, userToken) => {
     headers: {
       "Content-Type": "application/json",
       "x-dw-client-id": config.client_id,
-      Authorization: userToken
+      Authorization: userToken,
     },
     body: body
   };
 };
 
 export const apiPostMethod = (url, query, body, userToken) => {
+  if (userToken){
   return axios.post(
     config.url + url + (query ? "?" + query : ""),
-    JSON.stringify(body),
+    body ? JSON.stringify(body) : null,
     {
       headers: {
         "Content-Type": body ? "application/json" : '',
         "x-dw-client-id": config.client_id,
-        Authorization: userToken,
+        'Authorization': userToken,
       }
     }
   );
+  } else {
+    return axios.post(
+      config.url + url + (query ? "?" + query : ""),
+      body ? JSON.stringify(body) : null,
+      {
+        headers: {
+          "Content-Type": body ? "application/json" : '',
+          "x-dw-client-id": config.client_id,
+        }
+      }
+    );
+  }
 };
 
 export const apiPatchMethod = (url, query, body, userToken) => {
