@@ -64,6 +64,6 @@
     "css-loader": "^3.4.2",
     "node-hot-loader": "^1.17.8",
     "eslint": "^6.8.0",
-    "node-sass": "^4.13.1"
+    "node-sass": "^7.0.0"
   }
 }
